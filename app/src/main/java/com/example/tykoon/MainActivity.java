@@ -155,8 +155,9 @@ public class MainActivity extends AppCompatActivity {
                                     items.remove(i);
                                     adapter.notifyDataSetChanged();
 
-                                    guest[Tag].setVisibility(View.INVISIBLE);
-                                    comeGuest(Tag);
+                                    order_list[Tag].setText(""); // 주문 목록 제거
+                                    guest[Tag].setVisibility(View.INVISIBLE); // 게스트 안보이게
+                                    comeGuest(Tag); // 다음 게스트 들어옴
 
                                 }
                                 // 서빙 실패 시 토스트만 사라짐

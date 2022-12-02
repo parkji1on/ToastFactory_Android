@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,25 +28,29 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RankActivity extends AppCompatActivity {
 
-    Button refreshBtn;
-    RecyclerView recyclerView;
+    private Button refreshBtn, backBtn;
+    private RecyclerView recyclerView;
     private List<UserRank> userRanks;
 
     private Retrofit mRetrofit;
     private Retrofit_interface retrofit_interface;
 
-    Call<BaseResponse<String>> rankDataRes;
-    Call<BaseResponse<List<UserRank>>> rankListRes;
+    private Call<BaseResponse<String>> rankDataRes;
+    private Call<BaseResponse<List<UserRank>>> rankListRes;
+
+    private int offset = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rank_view_xml);
 
+        backBtn = findViewById(R.id.rank_back_btn);
         refreshBtn = findViewById(R.id.rank_refresh_btn);
         recyclerView = findViewById(R.id.recyclerview);
 
         // retrofit logic
+        userRanks = new ArrayList<>();
         setRetrofitInit();
         getRankList(0);
 
@@ -52,7 +58,8 @@ public class RankActivity extends AppCompatActivity {
         refreshBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {    // 버튼 호출시 api 재호출
-                getRankList(0);
+                userRanks.clear();
+                getRankList(offset);
             }
         });
 
@@ -75,14 +82,23 @@ public class RankActivity extends AppCompatActivity {
     private Callback<BaseResponse<List<UserRank>>> mRetrofitListCallback = new Callback<BaseResponse<List<UserRank>>>() {
         @Override
         public void onResponse(Call<BaseResponse<List<UserRank>>> call, Response<BaseResponse<List<UserRank>>> response) {
+            // 성공 여부 확인
             if (!response.isSuccessful()){
                 System.out.println("call = " + call);
                 return;
             }
-
-            userRanks = response.body().getResult();
+            // 새로운 요소가 없을 경우 확인
+            if (response.body().getResult().isEmpty()) {
+                return;
+            }
+            
+            for (UserRank userRank : response.body().getResult()) {
+                System.out.println("userRank.getRank() = " + userRank.getRank());
+                System.out.println("userRank.getName() = " + userRank.getName());
+            }
+            
+            userRanks.addAll(response.body().getResult());
             createRecycler();
-
         }
 
         @Override
@@ -90,7 +106,6 @@ public class RankActivity extends AppCompatActivity {
             t.printStackTrace();
         }
     };
-
 
     private void createRecycler() {
         /* initiate adapter */
@@ -114,11 +129,9 @@ public class RankActivity extends AppCompatActivity {
         @Override
         public void onResponse(Call<BaseResponse<String>> call, Response<BaseResponse<String>> response) {
             if (!response.isSuccessful()){
-                System.out.println("call = " + call);
                 return;
             }
             String result = response.body().getResult();
-            System.out.println("result = " + result);
         }
 
         @Override

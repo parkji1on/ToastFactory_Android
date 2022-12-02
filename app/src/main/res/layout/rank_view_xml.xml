@@ -8,6 +8,7 @@
     tools:ignore="MissingConstraints">
 
     <Button
+        android:id="@+id/rank_back_btn"
         android:layout_width="50dp"
         android:layout_height="50dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,6 +39,7 @@
                 android:layout_height="35dp"
                 android:layout_gravity="center"
                 android:layout_margin="20dp"
+                android:clickable="true"
                 android:background="@drawable/refresh_btn" />
         </LinearLayout>
 

@@ -1,14 +1,16 @@
-package com.example.tykoon;
+package com.example.tykoon.rank;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.ScrollView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.tykoon.R;
+import com.example.tykoon.rank.MyRecyclerAdapter;
+import com.example.tykoon.rank.RankVO;
 
 import java.util.ArrayList;
 import java.util.List;

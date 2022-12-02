@@ -1,4 +1,4 @@
-package com.example.tykoon;
+package com.example.tykoon.rank;
 
 
 public class RankVO {

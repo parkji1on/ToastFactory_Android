@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Tykoon">
         <activity
-            android:name=".RankActivity"
+            android:name=".rank.RankActivity"
             android:theme = "@style/FullScreenTheme"
             android:exported="true">
             <intent-filter>

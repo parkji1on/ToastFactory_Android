@@ -9,11 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tykoon.R;
+import com.example.tykoon.retrofit.model.UserRank;
 
 import java.util.List;
 
 public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.ViewHolder>{
-    private List<RankVO> userRanks;
+    private List<UserRank> userRanks;
 
     @NonNull
     @Override
@@ -27,7 +28,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         holder.onBind(userRanks.get(position));
     }
 
-    public void setUserRanks(List<RankVO> list){
+    public void setUserRanks(List<UserRank> list){
         this.userRanks = list;
         notifyDataSetChanged();
     }
@@ -50,7 +51,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
             score = (TextView) itemView.findViewById(R.id.rank_ect_score);
         }
 
-        void onBind(RankVO item){
+        void onBind(UserRank item){
             rank.setText(String.valueOf(item.getRank()));
             name.setText(item.getName());
             score.setText(String.valueOf(item.getScore()));

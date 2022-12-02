@@ -1,12 +1,11 @@
-package com.example.tykoon.rank;
+package com.example.tykoon.retrofit.model;
 
-
-public class RankVO {
+public class UserRank {
     private Long rank;
     private String name;
-    private Long score;
+    private Double score;
 
-    public RankVO(Long rank, String name, Long score) {
+    public UserRank(Long rank, String name, Double score) {
         this.rank = rank;
         this.name = name;
         this.score = score;
@@ -20,7 +19,7 @@ public class RankVO {
         return name;
     }
 
-    public Long getScore() {
+    public Double getScore() {
         return score;
     }
 }

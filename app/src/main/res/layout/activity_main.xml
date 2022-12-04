@@ -975,6 +975,7 @@
             android:gravity="center">
 
             <RatingBar
+                android:id = "@+id/life"
                 style="@style/Widget.AppCompat.RatingBar.Indicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -991,10 +992,12 @@
         android:gravity="center"
         android:layout_weight="1">
         <TextView
+            android:id = "@+id/score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/toast"
-            android:text="점수 : 0000"
-            android:textSize="20dp"/>
+            android:text="0000"
+            android:textSize="25dp"
+            android:layout_marginBottom="5dp"/>
     </LinearLayout>
 </LinearLayout>

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.media.Rating;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.ContextMenu;
@@ -22,6 +23,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     // 현재 뷰가 홀인지, 주방인지
     boolean IsInHall = true;
 
-    // 시간 상수 설정
+    // 시간 상수
     final static int SEC = 1000;
     final static int MIN = 60 * SEC;
     final static int HOUR = 60 * MIN;
@@ -50,24 +52,32 @@ public class MainActivity extends AppCompatActivity {
     final static int TRASH = 6;
     static String toast_name, toast_quality; // 커스텀 다이얼로그와 값 주고 받음
 
-    final String toast_menu[] = {"햄치즈스페셜","베이컨베스트","햄치즈포테이토","더블소세지","새우","그릴드불고기","베이컨치즈베이글"};
+    // 토스트 메뉴들
+    final String toast_menu[] = {
+            "햄치즈스페셜","베이컨베스트","햄치즈포테이토","더블소세지","새우","그릴드불고기","베이컨치즈베이글"};
+
+    // 각 테이블별로 시간이 0초 아래가 됐는지 -> 필요할까? 일단 나둠
+    boolean is_time_over[] = {false, false, false, false, false, false};
 
     CountDownTimer countDownTimer0, countDownTimer1, countDownTimer2;
-    TextView timer_h[] = new TextView[6]; // Guest 시간
-    TextView timer_k[] = new TextView[6]; // Guest 시간
-    ImageButton guest[] = new ImageButton[6]; // Guest 이미지버튼
-    ImageButton table[] = new ImageButton[6]; // Table 이미지버튼
+    TextView timer_h[] = new TextView[6]; // Guest 시간 -> 홀에서 보이게
+    TextView timer_k[] = new TextView[6]; // Guest 시간 -> 주방에서 보이게
+    TextView txtGredient, txtMenu, txtScore, txtDay; // 재료, 메뉴, 점수, Day
+    TextView tv_world_time; // 게임 세계 시간
+    TextView order_list_h[] = new TextView[6]; // 테이블 별 주문 리스트뷰 -> 홀 텍스트
+    TextView order_list_k[] = new TextView[6]; // 테이블 별 주문 리스트뷰 -> 홀 텍스트
+
+    ImageButton guest[] = new ImageButton[6]; // Guest 이미지버튼 -> 버튼 기능 필요없을 시 뷰로 변경
+    ImageButton table[] = new ImageButton[6]; // Table 이미지버튼 -> 버튼 기능 필요없을 시 뷰로 변경
     ImageButton ingreButtons[] = new ImageButton[16];
     ImageButton item_btn, pause_btn, btnRecipe, btnStart, btnRestart;;
     Button btn_changeView;
-    ProgressBar progFood;
 
-    TextView txtGredient, txtMenu;
-    TextView tv_world_time; // 게임 세계 시간 텍스트뷰
-    TextView order_list_h[] = new TextView[6]; // 테이블 별 주문 리스트뷰 -> 홀 텍스트
-    TextView order_list_k[] = new TextView[6]; // 테이블 별 주문 리스트뷰 -> 홀 텍스트
     ListView listView; // 완성된 음식 들어가는 리스트뷰
     ViewFlipper vFlipper;
+
+    RatingBar ratingBar;
+    ProgressBar progFood;
 
     String ingre = "\n\n\n";   //TextView에 보여줄 텍스트 생성
     String choiceMenu; //선택한 메뉴의 이름
@@ -86,13 +96,14 @@ public class MainActivity extends AppCompatActivity {
         put("베이컨치즈베이글", new int[]{0,1,1,0,1,0,1,0,0,0,0,0,0,0,0,0});
     }};
 
+
+
+    // 리소스 ID 담아둔 배열
     // Guest 관련
     int guest_id[] = {R.id.guest1,R.id.guest2,R.id.guest3,R.id.guest4,R.id.guest5,R.id.guest6};
     int guest_image[] = {R.drawable.guest1, R.drawable.guest2, R.drawable.guest3, R.drawable.guest4,
             R.drawable.guest5,R.drawable.guest6,R.drawable.guest7,R.drawable.guest8,R.drawable.guest9,
             R.drawable.guest10};
-
-    // 리소스 ID 담아둔 배열
     int table_id[] = {R.id.Table1, R.id.Table2, R.id.Table3, R.id.Table4, R.id.Table5, R.id.Table6};
     int timer_id_h[] = {R.id.timer1_h, R.id.timer2_h, R.id.timer3_h, R.id.timer4_h, R.id.timer5_h, R.id.timer6_h};
     int timer_id_k[] = {R.id.timer1_k, R.id.timer2_k, R.id.timer3_k, R.id.timer4_k, R.id.timer5_k, R.id.timer6_k};
@@ -102,9 +113,6 @@ public class MainActivity extends AppCompatActivity {
                          R.id.ingre4, R.id.ingre5, R.id.ingre6, R.id.ingre7,
                          R.id.ingre8, R.id.ingre9,R.id.ingre10, R.id.ingre11,
                          R.id.ingre12, R.id.ingre13, R.id.ingre14, R.id.ingre15};
-
-    // 각 테이블별로 시간이 0초 아래가 됐는지 -> 필요할까? 일단 나둠
-    boolean is_time_over[] = {false, false, false, false, false, false};
 
     long guest_time = 0; // 손님 별 시간
     long temp_time = 0; // 시간 계산 위해
@@ -129,11 +137,13 @@ public class MainActivity extends AppCompatActivity {
         txtGredient     = (TextView)    findViewById(R.id.txtGredient);
         txtMenu         = (TextView)    findViewById(R.id.txtMenu);
         progFood        = (ProgressBar) findViewById(R.id.progFood);
-
+        txtDay          = (TextView)    findViewById(R.id.day);
+        txtScore        = (TextView)    findViewById(R.id.score);
+        ratingBar       = (RatingBar)   findViewById(R.id.life);
 
         items = new ArrayList<>();
         final GameAdapter adapter = new GameAdapter(this, items);
-        listView.setAdapter(adapter);
+        listView.setAdapter(adapter); // 리스트뷰에 어댑터 설정
 
         for(int i = 0; i < guest_id.length; i++){
             final int index;
@@ -150,8 +160,13 @@ public class MainActivity extends AppCompatActivity {
             ingreButtons[i] = (ImageButton) findViewById(ingreBtnIDs[i]);
         }
 
-        //menu등록
+        // menu등록
         registerForContextMenu(btnRecipe);
+
+        // 게임 인스턴스 통한 설정
+        txtDay.setText(Short.toString(GameInstance.getInstance().getStage()));
+        ratingBar.setRating(GameInstance.getInstance().getRating());
+        txtScore.setText(Integer.toString(GameInstance.getInstance().getScore()));
 
         // 처음 오픈하면 모든 손님들이 들어옴
         for(int i = 0; i < 6; i++)
@@ -161,6 +176,165 @@ public class MainActivity extends AppCompatActivity {
 
             comeGuest(index);
         }
+
+
+        // 첫번째 매개변수에 있는 시간 만큼 스테이지가 실행되고 끝나면 onFinish, 두번째 매개변수 시간마다 onTick 함수 실행됨
+        countDownTimer0 = new CountDownTimer(60 * MIN, SEC) {
+            @Override
+            public void onTick(long l) {
+
+                int hour = (int) (world_time / HOUR);
+                int minute = (int) ((world_time % HOUR) / MIN);
+
+                String cur_Time = "";
+
+                if(hour<10) cur_Time += "0";
+                cur_Time += hour + ":";
+
+                if(minute < 10) cur_Time += "0";
+                cur_Time += minute;
+
+                tv_world_time.setText(cur_Time);
+
+                world_time += (10 * MIN);
+
+                // 1초마다
+            }
+
+            @Override
+            public void onFinish() {
+                // 여기 마감 시간이 되면 다음 스테이지로 넘어가는 코드 추가
+                onFinish();
+            }
+        }.start();
+
+        // 완성된 음식 목록에 있는 음식 선택하면 대화상자가 뜨고 대화상자에서 음식을 몇 번 테이블에 서빙할지, 버릴 지 정함
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                CustomDialog customDialog = new CustomDialog(MainActivity.this);
+
+                toast_name = items.get(i).name;
+                toast_quality = Float.toString(items.get(i).quality);
+
+                customDialog.setDialogListener(new CustomDialog.CustomDialogInterface() {
+                    @Override
+                    public void BtnClicked(int Tag) {
+                        switch (Tag)
+                        {
+                            case TABLE_1:
+                            case TABLE_2:
+                            case TABLE_3:
+                            case TABLE_4:
+                            case TABLE_5:
+                            case TABLE_6:
+                                // 서빙 성공 시 손님 나가고 다음 손님 들어올 준비 -> 손님 나가고 점수 계산하는 코드 필요
+                                if(CheckOrder(i,Tag))
+                                {
+                                    items.remove(i);
+                                    adapter.notifyDataSetChanged();
+
+                                    order_list_h[Tag].setText(""); // 주문 목록 제거
+                                    order_list_k[Tag].setText("");
+                                    guest[Tag].setVisibility(View.INVISIBLE); // 게스트 안보이게
+                                    comeGuest(Tag); // 다음 게스트 들어옴
+
+                                }
+                                // 서빙 실패 시 토스트만 사라짐
+                                else
+                                {
+                                    items.remove(i);
+                                    adapter.notifyDataSetChanged();
+                                }
+                                break;
+                            case TRASH:
+                                items.remove(i);
+                                adapter.notifyDataSetChanged();
+                                break;
+
+                        }
+                    }
+
+                });
+                customDialog.show();
+
+            }
+        });
+
+        //조리시작 버튼을 눌렀을 때
+        btnStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //음식의 이름과 재료로 점수를 계산(scoring)
+
+                menu = new Menu(choiceMenu, 0/*scoring(choiceMenu, ingredientList)*/);
+                Food food = new Food(menu.menuName, menu.score);
+                //Menu 객체를 생성 Menu(choiceMenu, scoreing());
+                //재료 객체 초기화(다음 음식을 받을 준비)
+                ingredientList=new int[16];
+                //progress bar 진행률 업데이트
+                for(int i=0; i < progFood.getMax(); i++)
+                {
+                    progFood.setProgress(i+1);
+                    //텀을 줄 수 있는 공간 필요
+                }
+
+                // 홀에 있는 서빙 리스트로 감
+                items.add(food);
+                adapter.notifyDataSetChanged();
+
+                Toast.makeText(getApplicationContext(), choiceMenu+"의 조리가 완료되었습니다!", Toast.LENGTH_SHORT).show();
+                txtGredient.setText("");
+                txtMenu.setText("\n\n\n");
+            }
+        });
+
+        //초기화 버튼을 눌렀을 경우
+        btnRestart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //메뉴 객체를 어떻게 할지 정해야 함 //굳이 어떻게 할 필요 없나? 새로운 객체를 생성하면 되서
+                txtGredient.setText("");
+                txtMenu.setText("\n\n\n");
+                progFood.setProgress(0);
+                choiceMenu = "";//굳이 필요없음
+                ingredientList = new int[16];
+            }
+        });
+
+        /* 임시로 완성된 음식 목록에 올리려고 한 코드 -> 나중에 주방이랑 연계
+        item_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Random rand = new Random();
+
+                String str = toast_menu[rand.nextInt(toast_menu.length)];
+
+                Food food = new Food(str, 50.0f);
+                items.add(food);
+
+                adapter.notifyDataSetChanged();
+            }
+        });
+*/
+
+        // 주방 -> 홀 / 홀 -> 주방으로 이동할 수 있음
+        btn_changeView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(IsInHall)
+                {
+                    btn_changeView.setText("주방");
+                }
+                else
+                {
+                    btn_changeView.setText("홀");
+                }
+                IsInHall = !IsInHall;
+                vFlipper.showNext();
+            }
+        });
 
         //재료버튼이 눌렸을 때
         for(int i = 0; i < ingreBtnIDs.length; i++){
@@ -197,162 +371,6 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-        // 첫번째 매개변수에 있는 시간 만큼 스테이지가 실행되고 끝나면 onFinish, 두번째 매개변수 시간마다 onTick 함수 실행됨
-        countDownTimer0 = new CountDownTimer(60 * MIN, SEC) {
-            @Override
-            public void onTick(long l) {
-
-                int hour = (int) (world_time / HOUR);
-                int minute = (int) ((world_time % HOUR) / MIN);
-
-                String cur_Time = "";
-
-                if(hour<10) cur_Time += "0";
-                cur_Time += hour + ":";
-
-                if(minute < 10) cur_Time += "0";
-                cur_Time += minute;
-
-                tv_world_time.setText(cur_Time);
-
-                world_time += (10 * MIN);
-            }
-
-            @Override
-            public void onFinish() {
-                // 여기 마감 시간이 되면 다음 스테이지로 넘어가는 코드 추가
-                onFinish();
-            }
-        }.start();
-
-        // 완성된 음식 목록에 있는 음식 선택하면 대화상자가 뜨고 대화상자에서 음식을 몇 번 테이블에 서빙할지, 버릴 지 정함
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                CustomDialog customDialog = new CustomDialog(MainActivity.this);
-
-                toast_name = items.get(i).name;
-                toast_quality = Float.toString(items.get(i).quality);
-
-                customDialog.setDialogListener(new CustomDialog.CustomDialogInterface() {
-                    @Override
-                    public void BtnClicked(int Tag) {
-                        switch (Tag)
-                        {
-                            case TABLE_1:
-                            case TABLE_2:
-                            case TABLE_3:
-                            case TABLE_4:
-                            case TABLE_5:
-                            case TABLE_6:
-                                // 서빙 성공 시 손님 나가고 다음 손님 들어올 준비 -> 손님 나가고 점수 계산하는 코드 필요
-                                if(CheckOrder(i,Tag))
-                                {
-                                    Toast.makeText(getApplicationContext(),"서빙 성공",Toast.LENGTH_SHORT).show();
-                                    items.remove(i);
-                                    adapter.notifyDataSetChanged();
-
-                                    order_list_h[Tag].setText(""); // 주문 목록 제거
-                                    order_list_k[Tag].setText("");
-                                    guest[Tag].setVisibility(View.INVISIBLE); // 게스트 안보이게
-                                    comeGuest(Tag); // 다음 게스트 들어옴
-
-                                }
-                                // 서빙 실패 시 토스트만 사라짐
-                                else
-                                {
-                                    Toast.makeText(getApplicationContext(),"서빙 실패",Toast.LENGTH_SHORT).show();
-                                    items.remove(i);
-                                    adapter.notifyDataSetChanged();
-                                }
-                                break;
-                            case TRASH:
-                                items.remove(i);
-                                adapter.notifyDataSetChanged();
-                                Toast.makeText(getApplicationContext(),"버리기",Toast.LENGTH_SHORT);
-                                break;
-
-                        }
-                    }
-
-                });
-                customDialog.show();
-
-            }
-        });
-
-        //조리시작 버튼을 눌렀을 때
-        btnStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //음식의 이름과 재료로 점수를 계산(scoring)
-                menu = new Menu(choiceMenu, scoring(choiceMenu, ingredientList));
-                Food food = new Food(menu.menuName, menu.score);
-                //Menu 객체를 생성 Menu(choiceMenu, scoreing());
-                //재료 객체 초기화(다음 음식을 받을 준비)
-                ingredientList=new int[16];
-                //progress bar 진행률 업데이트
-                for(int i=0; i < progFood.getMax(); i++)
-                {
-                    progFood.setProgress(i+1);
-                    //텀을 줄 수 있는 공간 필요
-                }
-
-                // 홀에 있는 서빙 리스트로 감
-                items.add(food);
-                adapter.notifyDataSetChanged();
-
-                Toast.makeText(getApplicationContext(), choiceMenu+"의 조리가 완료되었습니다!", Toast.LENGTH_SHORT).show();
-                txtGredient.setText("");
-                txtMenu.setText("\n\n\n");
-            }
-        });
-
-        //초기화 버튼을 눌렀을 경우
-        btnRestart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //메뉴 객체를 어떻게 할지 정해야 함 //굳이 어떻게 할 필요 없나? 새로운 객체를 생성하면 되서
-                txtGredient.setText("");
-                txtMenu.setText("\n\n\n");
-                progFood.setProgress(0);
-                choiceMenu = "";//굳이 필요없음
-                ingredientList = new int[16];
-            }
-        });
-
-        // 임시로 완성된 음식 목록에 올리려고 한 코드 -> 나중에 주방이랑 연계
-        item_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Random rand = new Random();
-
-                String str = toast_menu[rand.nextInt(toast_menu.length)];
-
-                Food food = new Food(str, 50.0f);
-                items.add(food);
-
-                adapter.notifyDataSetChanged();
-            }
-        });
-
-        // 주방 -> 홀 / 홀 -> 주방으로 이동할 수 있음
-        btn_changeView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(IsInHall)
-                {
-                    btn_changeView.setText("주방");
-                }
-                else
-                {
-                    btn_changeView.setText("홀");
-                }
-                IsInHall = !IsInHall;
-                vFlipper.showNext();
-            }
-        });
     }
 
     // 테이블이 비고 손님이 들어오기 까지의 시간이 지나면 손님이 들어오게 되고 주문을 한다.
@@ -362,6 +380,8 @@ public class MainActivity extends AppCompatActivity {
         {
             return;
         }
+
+        is_time_over[index] = false;
 
         // 5초가 지나면 손님 들어옴 Tick은 필요없음
         countDownTimer1 = new CountDownTimer(5 * SEC, 5 * SEC) {
@@ -412,8 +432,10 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onFinish() {
                         // 타이머가 종료되면 손님이 나가고 다음 손님이 들어오게 됨
+                        is_time_over[index] = true;
                         guest[index].setVisibility(View.INVISIBLE);
                         order_list_h[index].setText("");
+                        exitGuest(index, 0);
                         comeGuest(index);
                     }
 
@@ -467,6 +489,57 @@ public class MainActivity extends AppCompatActivity {
         order_list_k[index].setText(toast_menu[select]);
     }
 
+    // 손님 나갈 때 평가 후 점수, 별점에 반영
+    private void exitGuest(int index, int food_quality)
+    {
+        float cur_rating = GameInstance.getInstance().getRating();
+        int cur_score = GameInstance.getInstance().getScore();
+
+        // 타임 오버가 돼서 나간 경우는 점수 못 얻고 별점 -0.5
+        if(is_time_over[index])
+        {
+            cur_rating -= 0.5f;
+
+            GameInstance.getInstance().setRating(cur_rating);
+            ratingBar.setRating(GameInstance.getInstance().getRating());
+
+            return;
+        }
+
+        // 음식 상
+        if(food_quality >= 70)
+        {
+            cur_rating += 0.5f;
+            cur_score += food_quality;
+
+            GameInstance.getInstance().setScore(cur_score);
+            GameInstance.getInstance().setRating(cur_rating);
+
+            ratingBar.setRating(GameInstance.getInstance().getRating());
+            txtScore.setText(Integer.toString(GameInstance.getInstance().getScore()));
+        }
+        // 음식 중
+        else if(food_quality >= 30)
+        {
+            cur_score += food_quality;
+
+            GameInstance.getInstance().setScore(cur_score);
+            txtScore.setText(Integer.toString(GameInstance.getInstance().getScore()));
+        }
+        // 음식 하
+        else
+        {
+            cur_rating -= 0.5f;
+            cur_score += food_quality;
+
+            GameInstance.getInstance().setScore(cur_score);
+            GameInstance.getInstance().setRating(cur_rating);
+
+            ratingBar.setRating(GameInstance.getInstance().getRating());
+            txtScore.setText(Integer.toString(GameInstance.getInstance().getScore()));
+        }
+
+    }
     // 리스트뷰와 연결할 어댑터 설정
     public class GameAdapter extends BaseAdapter {
 
@@ -483,6 +556,7 @@ public class MainActivity extends AppCompatActivity {
 
         public View getView(int position, View convertView, ViewGroup parent)
         {
+            // 리스트뷰에 들어갈 아이템의 xml
             View view = mLayoutInflater.inflate(R.layout.listview_item, null);
 
             Button btn = (Button) view.findViewById(R.id.serve_list);
@@ -495,12 +569,10 @@ public class MainActivity extends AppCompatActivity {
         public Food getItem(int i) {
             return items.get(i);
         }
-
         @Override
         public int getCount() {
             return items.size();
         }
-
         @Override
         public long getItemId(int i) {
             return i;

@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     CountDownTimer countDownTimer0, countDownTimer1, countDownTimer2;
     TextView timer_h[] = new TextView[6]; // Guest 시간 -> 홀에서 보이게
     TextView timer_k[] = new TextView[6]; // Guest 시간 -> 주방에서 보이게
-    TextView txtGredient, txtMenu, txtScore, txtDay; // 재료, 메뉴, 점수, Day
+    TextView txtGredient, txtScore, txtDay; // 재료, 점수, Day
     TextView tv_world_time; // 게임 세계 시간
     TextView order_list_h[] = new TextView[6]; // 테이블 별 주문 리스트뷰 -> 홀 텍스트
     TextView order_list_k[] = new TextView[6]; // 테이블 별 주문 리스트뷰 -> 홀 텍스트
@@ -135,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
         btnRestart      = (ImageButton) findViewById(R.id.btnRestart);
         btnStart        = (ImageButton) findViewById(R.id.btnStart);
         txtGredient     = (TextView)    findViewById(R.id.txtGredient);
-        txtMenu         = (TextView)    findViewById(R.id.txtMenu);
         progFood        = (ProgressBar) findViewById(R.id.progFood);
         txtDay          = (TextView)    findViewById(R.id.day);
         txtScore        = (TextView)    findViewById(R.id.score);
@@ -158,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
         for(int i=0; i<ingreBtnIDs.length; i++){
             ingreButtons[i] = (ImageButton) findViewById(ingreBtnIDs[i]);
-        }
+        } //재료버튼 등록
 
         // menu등록
         registerForContextMenu(btnRecipe);
@@ -286,7 +285,6 @@ public class MainActivity extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(), choiceMenu+"의 조리가 완료되었습니다!", Toast.LENGTH_SHORT).show();
                 txtGredient.setText("");
-                txtMenu.setText("\n\n\n");
             }
         });
 
@@ -296,7 +294,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //메뉴 객체를 어떻게 할지 정해야 함 //굳이 어떻게 할 필요 없나? 새로운 객체를 생성하면 되서
                 txtGredient.setText("");
-                txtMenu.setText("\n\n\n");
                 progFood.setProgress(0);
                 choiceMenu = "";//굳이 필요없음
                 ingredientList = new int[16];
@@ -600,7 +597,7 @@ public class MainActivity extends AppCompatActivity {
         dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                txtMenu.setText(choiceMenu+'\n');
+                txtGredient.setText(choiceMenu+'\n');
                 progFood.setProgress(0);
                 Toast.makeText(getApplicationContext(), choiceMenu+"을 선택하였습니다!", Toast.LENGTH_SHORT).show();
             }
@@ -670,7 +667,12 @@ public class MainActivity extends AppCompatActivity {
         int score=0;
         int[] recipe = recipebook.get(menu);
         for(int i=0; i<ingredientList.length; i++){
-            if(recipe[i]<ingredientList[i]) score+=10;
+            if(recipe[i]==0){
+                if(recipe[i]<ingredientList[i]) score-=10;
+            }
+            else{
+                if(recipe[i]<=ingredientList[i]) score+=10;
+            }
         }
         return score;
     }

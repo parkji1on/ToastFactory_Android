@@ -6,14 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical"
-    android:background="@drawable/background">
-
+    android:background="@drawable/background"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_margin="10dp">
+        android:layout_margin="10dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -28,6 +29,8 @@
                 android:gravity="center"
                 android:layout_marginLeft="50dp"
                 android:text="Day"
+                android:fontFamily="@font/toast"
+                android:textColor="@color/white"
                 android:textSize="25dp" />
 
             <TextView
@@ -36,8 +39,11 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="1"
+                android:fontFamily="@font/toast"
+                android:textColor="@color/white"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginRight="20dp"
+
                 android:textSize="25dp">
             </TextView>
 
@@ -47,6 +53,8 @@
                 android:layout_height="match_parent"
                 android:text = "09:00"
                 android:gravity="center"
+                android:fontFamily="@font/toast"
+                android:textColor="@color/white"
                 android:textSize="30dp">
             </TextView>
 
@@ -77,513 +85,919 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <ViewFlipper
+        android:id = "@+id/viewFlipper"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="180dp"
-            android:layout_height="206dp"
-            android:background="@drawable/order_list1"
-            android:gravity="center"
-            android:layout_marginRight="20dp">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:layout_width="180dp"
+                    android:layout_height="206dp"
+                    android:background="@drawable/order_list1"
+                    android:gravity="center"
+                    android:layout_marginRight="20dp">
+
+                    <TableLayout
+                        android:layout_width="163dp"
+                        android:layout_height="193dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/order_list2"
+                        android:stretchColumns="*">
+
+                        <TableRow>
+
+                            <TextView
+                                android:layout_width="10dp"
+                                android:layout_gravity="center"
+                                android:text="번호"
+                                android:fontFamily="@font/toast"
+                                android:textColor="@color/white"
+                                android:textSize="20dp"></TextView>
+
+                            <TextView
+                                android:layout_gravity="center"
+                                android:text="메뉴"
+                                android:fontFamily="@font/toast"
+                                android:textColor="@color/white"
+                                android:textSize="20dp"></TextView>
+                        </TableRow>
+
+                        <TableRow android:layout_weight="1">
+
+                            <TextView
+                                android:layout_gravity="center"
+                                android:text="1번"
+                                android:fontFamily="@font/toast"
+                                android:textColor="@color/white"
+                                android:textSize="20dp"></TextView>
+
+                            <TextView
+                                android:id = "@+id/order1_h"
+                                android:layout_gravity="center"
+                                android:text=""
+                                android:fontFamily="@font/toast"
+                                android:textColor="@color/white"
+                                android:textSize="15dp"></TextView>
+                        </TableRow>
+
+                        <TableRow android:layout_weight="1">
+
+                            <TextView
+                                android:layout_gravity="center"
+                                android:text="2번"
+                                android:fontFamily="@font/toast"
+                                android:textColor="@color/white"
+                                android:textSize="20dp"></TextView>
+
+                            <TextView
+                                android:id = "@+id/order2_h"
+                                android:layout_gravity="center"
+                                android:text=""
+                                android:fontFamily="@font/toast"
+                                android:textColor="@color/white"
+                                android:textSize="15dp"></TextView>
+                        </TableRow>
+
+                        <TableRow android:layout_weight="1">
+
+                            <TextView
+                                android:layout_gravity="center"
+                                android:text="3번"
+                                android:fontFamily="@font/toast"
+                                android:textColor="@color/white"
+                                android:textSize="20dp"></TextView>
+
+                            <TextView
+                                android:id = "@+id/order3_h"
+                                android:layout_gravity="center"
+                                android:text=""
+                                android:fontFamily="@font/toast"
+                                android:textColor="@color/white"
+                                android:textSize="15dp"></TextView>
+                        </TableRow>
+
+                        <TableRow android:layout_weight="1">
+
+                            <TextView
+                                android:layout_gravity="center"
+                                android:text="4번"
+                                android:fontFamily="@font/toast"
+                                android:textColor="@color/white"
+                                android:textSize="20dp"></TextView>
+
+                            <TextView
+                                android:id = "@+id/order4_h"
+                                android:layout_gravity="center"
+                                android:text=""
+                                android:fontFamily="@font/toast"
+                                android:textColor="@color/white"
+                                android:textSize="15dp"></TextView>
+                        </TableRow>
+
+                        <TableRow android:layout_weight="1">
+
+                            <TextView
+                                android:layout_gravity="center"
+                                android:text="5번"
+                                android:fontFamily="@font/toast"
+                                android:textColor="@color/white"
+                                android:textSize="20dp"></TextView>
+
+                            <TextView
+                                android:id = "@+id/order5_h"
+                                android:layout_gravity="center"
+                                android:text=""
+                                android:fontFamily="@font/toast"
+                                android:textColor="@color/white"
+                                android:textSize="15dp"></TextView>
+                        </TableRow>
+
+                        <TableRow android:layout_weight="1">
+
+                            <TextView
+                                android:layout_gravity="center"
+                                android:layout_height="match_parent"
+                                android:text="6번"
+                                android:fontFamily="@font/toast"
+                                android:textColor="@color/white"
+                                android:textSize="20dp"></TextView>
+
+                            <TextView
+                                android:id = "@+id/order6_h"
+                                android:layout_gravity="center"
+                                android:text=""
+                                android:fontFamily="@font/toast"
+                                android:textColor="@color/white"
+                                android:textSize="15dp"></TextView>
+
+                        </TableRow>
+                    </TableLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="139dp"
+                    android:layout_height="206dp"
+                    android:gravity="center"
+                    android:background="@drawable/serve_list1">
+
+                    <LinearLayout
+                        android:layout_width="125dp"
+                        android:layout_height="193dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/serve_list2"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text = "완성된 음식"
+                            android:textSize="20dp"
+                            android:layout_marginBottom="10dp"
+                            android:fontFamily="@font/toast"
+                            android:textColor="@color/white"
+                            android:layout_gravity="center">
+                        </TextView>
+
+                        <ListView
+                            android:id = "@+id/listView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:dividerHeight="10dp"
+                            >
+
+                        </ListView>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="370dp"
+                android:layout_marginTop="15dp"
+                android:columnCount="2"
+                android:rowCount="3"
+                android:layout_weight="1">
+
+                <RelativeLayout
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1">
+
+                    <Space
+                        android:id = "@+id/space1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true">
+                    </Space>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/space1"
+                        android:layout_toLeftOf="@id/Table1"
+                        android:text="1"
+                        android:fontFamily="@font/toast"
+                        android:textSize="30dp">
+
+                    </TextView>
+
+                    <ImageButton
+                        android:id="@+id/Table1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/space1"
+                        android:layout_centerHorizontal="true"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/table"></ImageButton>
+
+                    <ImageButton
+                        android:id="@+id/guest1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/space1"
+                        android:layout_centerHorizontal="true"
+                        android:background="@android:color/transparent"
+                        android:visibility="invisible"></ImageButton>
+
+                    <TextView
+                        android:id="@+id/timer1_h"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:fontFamily="@font/toast"
+                        android:textSize="30dp">
+
+                    </TextView>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1">
+
+                    <Space
+                        android:id = "@+id/space2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true">
+                    </Space>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/space2"
+                        android:layout_toLeftOf="@id/Table2"
+                        android:text="2"
+                        android:fontFamily="@font/toast"
+                        android:textSize="30dp">
+
+                    </TextView>
+                    <ImageButton
+                        android:id="@+id/Table2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/space2"
+                        android:layout_centerHorizontal="true"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/table"></ImageButton>
+
+                    <ImageButton
+                        android:id="@+id/guest2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/space2"
+                        android:layout_centerHorizontal="true"
+                        android:background="@android:color/transparent"
+                        android:visibility="invisible"></ImageButton>
+
+                    <TextView
+                        android:id="@+id/timer2_h"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:fontFamily="@font/toast"
+                        android:textSize="30dp"></TextView>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1">
+
+                    <Space
+                        android:id = "@+id/space3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"></Space>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/space3"
+                        android:layout_toLeftOf="@id/Table3"
+                        android:text="3"
+                        android:fontFamily="@font/toast"
+                        android:textSize="30dp"></TextView>
+
+                    <ImageButton
+                        android:id="@+id/Table3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/space3"
+                        android:layout_centerHorizontal="true"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/table"></ImageButton>
+
+                    <ImageButton
+                        android:id="@+id/guest3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/space3"
+                        android:layout_centerHorizontal="true"
+                        android:background="@android:color/transparent"
+                        android:visibility="invisible"></ImageButton>
+
+                    <TextView
+                        android:id="@+id/timer3_h"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:fontFamily="@font/toast"
+                        android:textSize="30dp"></TextView>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1">
+
+                    <Space
+                        android:id = "@+id/space4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"></Space>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/space4"
+                        android:layout_toLeftOf="@id/Table4"
+                        android:text="4"
+                        android:fontFamily="@font/toast"
+                        android:textSize="30dp"></TextView>
+
+                    <ImageButton
+                        android:id="@+id/Table4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/space4"
+                        android:layout_centerHorizontal="true"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/table"></ImageButton>
+
+                    <ImageButton
+                        android:id="@+id/guest4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/space4"
+                        android:layout_centerHorizontal="true"
+                        android:background="@android:color/transparent"
+                        android:visibility="invisible"></ImageButton>
+
+                    <TextView
+                        android:id="@+id/timer4_h"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:fontFamily="@font/toast"
+                        android:textSize="30dp"></TextView>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1">
+
+                    <Space
+                        android:id = "@+id/space5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"></Space>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/space5"
+                        android:layout_toLeftOf="@id/Table5"
+                        android:text="5"
+                        android:fontFamily="@font/toast"
+                        android:textSize="30dp"></TextView>
+
+                    <ImageButton
+                        android:id="@+id/Table5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/space5"
+                        android:layout_centerHorizontal="true"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/table"></ImageButton>
+
+                    <ImageButton
+                        android:id="@+id/guest5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/space5"
+                        android:layout_centerHorizontal="true"
+                        android:background="@android:color/transparent"
+                        android:visibility="invisible"></ImageButton>
+
+                    <TextView
+                        android:id="@+id/timer5_h"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:fontFamily="@font/toast"
+                        android:textSize="30dp"></TextView>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_rowWeight="1"
+                    android:layout_columnWeight="1">
+
+                    <Space
+                        android:id = "@+id/space6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"></Space>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/space6"
+                        android:layout_toLeftOf="@id/Table6"
+                        android:text="6"
+                        android:fontFamily="@font/toast"
+                        android:textSize="30dp"></TextView>
+
+                    <ImageButton
+                        android:id="@+id/Table6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/space6"
+                        android:layout_centerHorizontal="true"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/table"></ImageButton>
+
+                    <ImageButton
+                        android:id="@+id/guest6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/space6"
+                        android:layout_centerHorizontal="true"
+                        android:background="@android:color/transparent"
+                        android:visibility="invisible"></ImageButton>
+
+                    <TextView
+                        android:id="@+id/timer6_h"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:fontFamily="@font/toast"
+                        android:textSize="30dp"></TextView>
+
+                </RelativeLayout>
+
+            </GridLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="600dp"
+            android:orientation="vertical">
 
             <TableLayout
-                android:layout_width="163dp"
-                android:layout_height="193dp"
+                android:layout_width="wrap_content"
+                android:layout_height="125dp"
                 android:layout_gravity="center"
-                android:background="@drawable/order_list2"
-                android:stretchColumns="*">
+                android:layout_weight="1"
+                android:background="@drawable/gredients_bg"
+                android:padding="10dp"
+                android:stretchColumns="1,2">
+
+                <TableRow
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:gravity="center"
+                        android:text="테이블 번호"
+                        android:fontFamily="@font/toast"/>
+
+                    <TextView
+                        android:gravity="center"
+                        android:text="남은 시간"
+                        android:fontFamily="@font/toast"/>
+
+                    <TextView
+                        android:gravity="center"
+                        android:text="주문한 음식"
+                        android:fontFamily="@font/toast"/>
+                </TableRow>
+
+                <TableRow
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:gravity="center"
+                        android:text="1"
+                        android:fontFamily="@font/toast"/>
+
+                    <TextView
+                        android:id="@+id/timer1_k"
+                        android:gravity="center"
+                        android:text=""
+                        android:fontFamily="@font/toast"/>
+
+                    <TextView
+                        android:id="@+id/order1_k"
+                        android:gravity="center"
+                        android:text=""
+                        android:fontFamily="@font/toast"/>
+                </TableRow>
+
+                <TableRow
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:gravity="center"
+                        android:text="2"
+                        android:fontFamily="@font/toast"/>
+
+                    <TextView
+                        android:id="@+id/timer2_k"
+                        android:gravity="center"
+                        android:text=""
+                        android:fontFamily="@font/toast"/>
+
+                    <TextView
+                        android:id="@+id/order2_k"
+                        android:gravity="center"
+                        android:text=""
+                        android:fontFamily="@font/toast"/>
+                </TableRow>
+
+                <TableRow
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:gravity="center"
+                        android:text="3"
+                        android:fontFamily="@font/toast"/>
+
+                    <TextView
+                        android:id="@+id/timer3_k"
+                        android:gravity="center"
+                        android:text=""
+                        android:fontFamily="@font/toast"/>
+
+                    <TextView
+                        android:id="@+id/order3_k"
+                        android:gravity="center"
+                        android:text=""
+                        android:fontFamily="@font/toast"/>
+                </TableRow>
+
+                <TableRow
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:gravity="center"
+                        android:text="4"
+                        android:fontFamily="@font/toast"/>
+
+                    <TextView
+                        android:id="@+id/timer4_k"
+                        android:gravity="center"
+                        android:text=""
+                        android:fontFamily="@font/toast"/>
+
+                    <TextView
+                        android:id="@+id/order4_k"
+                        android:gravity="center"
+                        android:text=""
+                        android:fontFamily="@font/toast"/>
+                </TableRow>
+
+                <TableRow
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:gravity="center"
+                        android:text="5"
+                        android:fontFamily="@font/toast"/>
+
+                    <TextView
+                        android:id="@+id/timer5_k"
+                        android:gravity="center"
+                        android:text=""
+                        android:fontFamily="@font/toast"/>
+
+                    <TextView
+                        android:id="@+id/order5_k"
+                        android:gravity="center"
+                        android:text=""
+                        android:fontFamily="@font/toast"/>
+                </TableRow>
+
+                <TableRow
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:gravity="center"
+                        android:text="6"
+                        android:fontFamily="@font/toast"/>
+
+                    <TextView
+                        android:id="@+id/timer6_k"
+                        android:gravity="center"
+                        android:text=""
+                        android:fontFamily="@font/toast"/>
+
+                    <TextView
+                        android:id="@+id/order6_k"
+                        android:gravity="center"
+                        android:text=""
+                        android:fontFamily="@font/toast"/>
+                </TableRow>
+            </TableLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <ProgressBar
+                    android:id="@+id/progFood"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:max="100" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom"
+                    android:src="@drawable/doma" />
+
+                <TextView
+                    android:id="@+id/txtMenu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="메뉴명"
+                    android:fontFamily="@font/toast"/>
+
+                <TextView
+                    android:id="@+id/txtGredient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text=""
+                    android:fontFamily="@font/toast"/>
+            </FrameLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <ImageButton
+                    android:id="@+id/btnStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/base"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/btnstart" />
+
+                <TextView
+                    android:id="@+id/base"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text=" " />
+
+                <ImageButton
+                    android:id="@+id/btnRestart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/base"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/btnrestart" />
+
+                <ImageButton
+                    android:id="@+id/btnRecipe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/btnrecipe" />
+            </RelativeLayout>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_weight="1"
+                android:background="@drawable/gredients_bg"
+                android:padding="10dp">
+
+                <TableRow
+                    android:layout_marginBottom="5dp">
+
+                    <ImageButton
+                        android:id="@+id/ingre0"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/btn0" />
+
+                    <ImageButton
+                        android:id="@+id/ingre1"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/btn1" />
+
+                    <ImageButton
+                        android:id="@+id/ingre2"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/btn2" />
+
+                    <ImageButton
+                        android:id="@+id/ingre3"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/btn3" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginBottom="5dp">
+
+                    <ImageButton
+                        android:id="@+id/ingre4"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/btn4" />
+
+                    <ImageButton
+                        android:id="@+id/ingre5"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/btn5" />
+
+                    <ImageButton
+                        android:id="@+id/ingre6"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/btn6" />
+
+                    <ImageButton
+                        android:id="@+id/ingre7"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/btn7" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginBottom="5dp">
+
+                    <ImageButton
+                        android:id="@+id/ingre8"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/btn8" />
+
+                    <ImageButton
+                        android:id="@+id/ingre9"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/btn9" />
+
+                    <ImageButton
+                        android:id="@+id/ingre10"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/btn10" />
+
+                    <ImageButton
+                        android:id="@+id/ingre11"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/btn11" />
+                </TableRow>
 
                 <TableRow>
 
-                    <TextView
-                        android:layout_width="10dp"
-                        android:layout_gravity="center"
-                        android:text="번호"
-                        android:textColor="@color/white"
-                        android:textSize="15dp"></TextView>
+                    <ImageButton
+                        android:id="@+id/ingre12"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/btn12" />
 
-                    <TextView
-                        android:layout_gravity="center"
-                        android:text="메뉴"
-                        android:textSize="15dp"></TextView>
-                </TableRow>
+                    <ImageButton
+                        android:id="@+id/ingre13"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/btn13" />
 
-                <TableRow android:layout_weight="1">
+                    <ImageButton
+                        android:id="@+id/ingre14"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/btn14" />
 
-                    <TextView
-                        android:layout_gravity="center"
-                        android:text="1번"
-                        android:textSize="15dp"></TextView>
-
-                    <TextView
-                        android:id = "@+id/order1"
-                        android:layout_gravity="center"
-                        android:text=""
-                        android:textSize="15dp"></TextView>
-                </TableRow>
-
-                <TableRow android:layout_weight="1">
-
-                    <TextView
-                        android:layout_gravity="center"
-                        android:text="2번"
-                        android:textSize="15dp"></TextView>
-
-                    <TextView
-                        android:id = "@+id/order2"
-                        android:layout_gravity="center"
-                        android:text=""
-                        android:textSize="15dp"></TextView>
-                </TableRow>
-
-                <TableRow android:layout_weight="1">
-
-                    <TextView
-                        android:layout_gravity="center"
-                        android:text="3번"
-                        android:textSize="15dp"></TextView>
-
-                    <TextView
-                        android:id = "@+id/order3"
-                        android:layout_gravity="center"
-                        android:text=""
-                        android:textSize="15dp"></TextView>
-                </TableRow>
-
-                <TableRow android:layout_weight="1">
-
-                    <TextView
-                        android:layout_gravity="center"
-                        android:text="4번"
-                        android:textSize="15dp"></TextView>
-
-                    <TextView
-                        android:id = "@+id/order4"
-                        android:layout_gravity="center"
-                        android:text=""
-                        android:textSize="15dp"></TextView>
-                </TableRow>
-
-                <TableRow android:layout_weight="1">
-
-                    <TextView
-                        android:layout_gravity="center"
-                        android:text="5번"
-                        android:textSize="15dp"></TextView>
-
-                    <TextView
-                        android:id = "@+id/order5"
-                        android:layout_gravity="center"
-                        android:text=""
-                        android:textSize="15dp"></TextView>
-                </TableRow>
-
-                <TableRow android:layout_weight="1">
-
-                    <TextView
-                        android:layout_gravity="center"
-                        android:layout_height="match_parent"
-                        android:text="6번"
-                        android:textSize="15dp"></TextView>
-
-                    <TextView
-                        android:id = "@+id/order6"
-                        android:layout_gravity="center"
-                        android:text=""
-                        android:textSize="15dp"></TextView>
-
+                    <ImageButton
+                        android:id="@+id/ingre15"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/btn15" />
                 </TableRow>
             </TableLayout>
 
         </LinearLayout>
+    </ViewFlipper>
 
 
-        <LinearLayout
-            android:layout_width="139dp"
-            android:layout_height="206dp"
-            android:gravity="center"
-            android:background="@drawable/serve_list1">
-
-            <LinearLayout
-                android:layout_width="125dp"
-                android:layout_height="193dp"
-                android:layout_gravity="center"
-                android:background="@drawable/serve_list2"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text = "완성된 음식"
-                    android:textSize="18dp"
-                    android:layout_gravity="center">
-                </TextView>
-
-                <Button
-                    android:id = "@+id/serve1"
-                    android:layout_width="107dp"
-                    android:layout_height="26dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:text = "치즈토스트"
-                    android:background="@drawable/btn_bg"></Button>
-
-                <Button
-                    android:id = "@+id/serve2"
-                    android:layout_width="107dp"
-                    android:layout_height="26dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:text = ""
-                    android:background="@drawable/btn_bg"></Button>
-
-                <Button
-                    android:id = "@+id/serve3"
-                    android:layout_width="107dp"
-                    android:layout_height="26dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:text = ""
-                    android:background="@drawable/btn_bg"></Button>
-
-                <Button
-                    android:id = "@+id/serve4"
-                    android:layout_width="107dp"
-                    android:layout_height="26dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:text = ""
-                    android:background="@drawable/btn_bg"></Button>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="370dp"
-        android:layout_marginTop="50dp"
-        android:columnCount="2"
-        android:rowCount="3">
-
-        <RelativeLayout
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1">
-
-            <Space
-                android:id = "@+id/space1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true">
-            </Space>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1"
-                android:textSize="30dp"
-                android:layout_toLeftOf="@id/Table1"
-                android:layout_below="@id/space1">
-
-            </TextView>
-            <ImageButton
-                android:id="@+id/Table1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/space1"
-                android:layout_centerHorizontal="true"
-                android:background="@android:color/transparent"
-                android:src="@drawable/table"></ImageButton>
-
-            <ImageButton
-                android:id="@+id/guest1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/space1"
-                android:layout_centerHorizontal="true"
-                android:background="@android:color/transparent"
-                android:src="@drawable/guest"
-                android:visibility="invisible"></ImageButton>
-
-            <TextView
-                android:id="@+id/timer1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="30dp">
-
-            </TextView>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1">
-
-            <Space
-                android:id = "@+id/space2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true">
-            </Space>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2"
-                android:textSize="30dp"
-                android:layout_toLeftOf="@id/Table2"
-                android:layout_below="@id/space2">
-
-            </TextView>
-            <ImageButton
-                android:id="@+id/Table2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/space2"
-                android:layout_centerHorizontal="true"
-                android:background="@android:color/transparent"
-                android:src="@drawable/table"></ImageButton>
-
-            <ImageButton
-                android:id="@+id/guest2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/space2"
-                android:layout_centerHorizontal="true"
-                android:background="@android:color/transparent"
-                android:src="@drawable/guest"
-                android:visibility="invisible"></ImageButton>
-
-            <TextView
-                android:id="@+id/timer2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="30dp"></TextView>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1">
-
-            <Space
-                android:id = "@+id/space3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"></Space>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3"
-                android:textSize="30dp"
-                android:layout_toLeftOf="@id/Table3"
-                android:layout_below="@id/space3">
-            </TextView>
-
-            <ImageButton
-                android:id="@+id/Table3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/space3"
-                android:layout_centerHorizontal="true"
-                android:background="@android:color/transparent"
-                android:src="@drawable/table"></ImageButton>
-
-            <ImageButton
-                android:id="@+id/guest3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/space3"
-                android:layout_centerHorizontal="true"
-                android:background="@android:color/transparent"
-                android:visibility="invisible"
-                android:src="@drawable/guest"></ImageButton>
-
-            <TextView
-                android:id="@+id/timer3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="30dp"></TextView>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1">
-
-            <Space
-                android:id = "@+id/space4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"></Space>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="4"
-                android:textSize="30dp"
-                android:layout_toLeftOf="@id/Table4"
-                android:layout_below="@id/space4">
-            </TextView>
-
-            <ImageButton
-                android:id="@+id/Table4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/space4"
-                android:layout_centerHorizontal="true"
-                android:background="@android:color/transparent"
-                android:src="@drawable/table"></ImageButton>
-
-            <ImageButton
-                android:id="@+id/guest4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/space4"
-                android:layout_centerHorizontal="true"
-                android:background="@android:color/transparent"
-                android:visibility="invisible"
-                android:src="@drawable/guest"></ImageButton>
-
-            <TextView
-                android:id="@+id/timer4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="30dp"></TextView>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1">
-
-            <Space
-                android:id = "@+id/space5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"></Space>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="5"
-                android:textSize="30dp"
-                android:layout_toLeftOf="@id/Table5"
-                android:layout_below="@id/space5">
-            </TextView>
-
-            <ImageButton
-                android:id="@+id/Table5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/space5"
-                android:layout_centerHorizontal="true"
-                android:background="@android:color/transparent"
-                android:src="@drawable/table"></ImageButton>
-
-            <ImageButton
-                android:id="@+id/guest5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/space5"
-                android:layout_centerHorizontal="true"
-                android:background="@android:color/transparent"
-                android:visibility="invisible"
-                android:src="@drawable/guest"></ImageButton>
-
-            <TextView
-                android:id="@+id/timer5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="30dp"></TextView>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1">
-
-            <Space
-                android:id = "@+id/space6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"></Space>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="6"
-                android:textSize="30dp"
-                android:layout_toLeftOf="@id/Table6"
-                android:layout_below="@id/space6">
-            </TextView>
-
-            <ImageButton
-                android:id="@+id/Table6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/space6"
-                android:layout_centerHorizontal="true"
-                android:background="@android:color/transparent"
-                android:src="@drawable/table"></ImageButton>
-
-            <ImageButton
-                android:id="@+id/guest6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/space6"
-                android:layout_centerHorizontal="true"
-                android:background="@android:color/transparent"
-                android:visibility="invisible"
-                android:src="@drawable/guest"></ImageButton>
-
-            <TextView
-                android:id="@+id/timer6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="30dp"></TextView>
-
-        </RelativeLayout>
-
-    </GridLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="2">
 
+        <Button
+            android:id = "@+id/btn_changeview"
+            android:layout_width="67dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/btn_changeview"
+            android:text = "홀"
+            android:textSize="20dp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/toast"
+            >
+
+        </Button>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/ratingbar_bg">
+            android:background="@drawable/ratingbar_bg"
+            android:gravity="center">
 
-
+            <RatingBar
+                android:id = "@+id/life"
+                style="@style/Widget.AppCompat.RatingBar.Indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:progressTint="#ffff00"
+                android:rating="3"
+                android:stepSize="0.5" />
         </LinearLayout>
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="1">
         <TextView
             android:id = "@+id/score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="000000"
-            android:textSize="25dp">
-
-        </TextView>
-
+            android:fontFamily="@font/toast"
+            android:text="0000"
+            android:textSize="25dp"
+            android:layout_marginBottom="5dp"/>
     </LinearLayout>
 </LinearLayout>

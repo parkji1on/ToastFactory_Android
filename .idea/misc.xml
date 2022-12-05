@@ -3,12 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+<<<<<<< HEAD
         <entry key="app/src/main/res/font/font.xml" value="0.26927083333333335" />
         <entry key="app/src/main/res/layout/item_recycler_view.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/item_recycler_view_first.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/item_recycler_view_second.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/item_recycler_view_third.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/rank_view_xml.xml" value="0.2226084391276042" />
+=======
+        <entry key="..\:/Users/whwog/AndroidStudioProjects/ToastFactory_Android/app/src/main/res/drawable/btnshape.xml" value="0.1" />
+        <entry key="..\:/Users/whwog/AndroidStudioProjects/ToastFactory_Android/app/src/main/res/font/font.xml" value="0.24861111111111112" />
+        <entry key="..\:/Users/whwog/AndroidStudioProjects/ToastFactory_Android/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/whwog/AndroidStudioProjects/ToastFactory_Android/app/src/main/res/layout/listview_item.xml" value="0.1076923076923077" />
+        <entry key="..\:/Users/whwog/AndroidStudioProjects/ToastFactory_Android/app/src/main/res/layout/serve_dialog.xml" value="0.22175925925925927" />
+>>>>>>> 8b7f219a1db1000d59dd41a159e5bb860666c7b4
       </map>
     </option>
   </component>

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import com.example.tykoon.retrofit.Retrofit_interface;
 import com.example.tykoon.retrofit.model.BaseResponse;
 import com.example.tykoon.retrofit.model.UserRank;
 
+import java.io.InterruptedIOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,13 +31,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RankActivity extends AppCompatActivity {
 
     private Button refreshBtn, backBtn;
+    private TextView myRankTextView;
+    private TextView myScoreTextView;
+    private TextView myNameTextView;
+    private View myRankLayout;
     private RecyclerView recyclerView;
     private List<UserRank> userRanks;
 
     private Retrofit mRetrofit;
     private Retrofit_interface retrofit_interface;
 
-    private Call<BaseResponse<String>> rankDataRes;
+    private Call<BaseResponse<UserRank>> rankMyDataRes;
     private Call<BaseResponse<List<UserRank>>> rankListRes;
 
     private int offset = 0;
@@ -49,10 +55,18 @@ public class RankActivity extends AppCompatActivity {
         refreshBtn = findViewById(R.id.rank_refresh_btn);
         recyclerView = findViewById(R.id.recyclerview);
 
+        myNameTextView = findViewById(R.id.rank_my_name);
+        myRankTextView = findViewById(R.id.rank_my_rank);
+        myScoreTextView = findViewById(R.id.rank_my_score);
+        myRankLayout = findViewById(R.id.my_rank_layout);
+
         // retrofit logic
         userRanks = new ArrayList<>();
         setRetrofitInit();
         getRankList(0);
+
+        // TODO: name 변수 받아오기
+        getUserRank("박상민");
 
         // refreshBtn logic
         refreshBtn.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +79,10 @@ public class RankActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Retrofit 기본 URL 설정 메서드
+     * baseUrl을 설정해준 해당 Retrofit 객체를 retrofit_interface 객체로 사용
+     * */
     private void setRetrofitInit() {
         mRetrofit = new Retrofit.Builder()
                 .baseUrl("http://toastfactory.shop/")
@@ -84,17 +102,12 @@ public class RankActivity extends AppCompatActivity {
         public void onResponse(Call<BaseResponse<List<UserRank>>> call, Response<BaseResponse<List<UserRank>>> response) {
             // 성공 여부 확인
             if (!response.isSuccessful()){
-                System.out.println("call = " + call);
+                Log.getStackTraceString(new InterruptedIOException());
                 return;
             }
             // 새로운 요소가 없을 경우 확인
             if (response.body().getResult().isEmpty()) {
                 return;
-            }
-            
-            for (UserRank userRank : response.body().getResult()) {
-                System.out.println("userRank.getRank() = " + userRank.getRank());
-                System.out.println("userRank.getName() = " + userRank.getName());
             }
             
             userRanks.addAll(response.body().getResult());
@@ -121,21 +134,26 @@ public class RankActivity extends AppCompatActivity {
 
     /**  @GET("rank/my") */
     private void getUserRank(String name) {
-        rankDataRes = retrofit_interface.getUserRank(name);
-        rankDataRes.enqueue(mRetrofitCallback);
+        rankMyDataRes = retrofit_interface.getUserRank(name);
+        rankMyDataRes.enqueue(mRetrofitCallback);
     }
 
-    private Callback<BaseResponse<String>> mRetrofitCallback = new Callback<BaseResponse<String>>() {
+    private Callback<BaseResponse<UserRank>> mRetrofitCallback = new Callback<BaseResponse<UserRank>>() {
         @Override
-        public void onResponse(Call<BaseResponse<String>> call, Response<BaseResponse<String>> response) {
+        public void onResponse(Call<BaseResponse<UserRank>> call, Response<BaseResponse<UserRank>> response) {
             if (!response.isSuccessful()){
+                Log.getStackTraceString(new InterruptedIOException());
                 return;
             }
-            String result = response.body().getResult();
+            UserRank userRank = response.body().getResult();
+            myRankLayout.setVisibility(View.VISIBLE);
+            myNameTextView.setText(userRank.getName());
+            myRankTextView.setText(String.valueOf(userRank.getRank()));
+            myScoreTextView.setText(String.valueOf(userRank.getScore()));
         }
 
         @Override
-        public void onFailure(Call<BaseResponse<String>> call, Throwable t) {
+        public void onFailure(Call<BaseResponse<UserRank>> call, Throwable t) {
             t.printStackTrace();
         }
     };

@@ -12,7 +12,7 @@ import retrofit2.http.Query;
 
 public interface Retrofit_interface {
     @GET("rank/my")
-    Call<BaseResponse<String>> getUserRank(
+    Call<BaseResponse<UserRank>> getUserRank(
             @Query("name") String name);
 
     @GET("rank/")

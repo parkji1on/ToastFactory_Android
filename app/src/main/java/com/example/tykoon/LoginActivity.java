@@ -162,6 +162,8 @@ public class LoginActivity extends AppCompatActivity {
             if (response.body().getCode() == 1000) {
                 Toast.makeText(LoginActivity.this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show();
 
+                // 게임 인스턴스에 ID 넣는부분 추가
+                GameInstance.getInstance().setPlayerID(name);
                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                 intent.putExtra("name", name);
                 startActivity(intent);

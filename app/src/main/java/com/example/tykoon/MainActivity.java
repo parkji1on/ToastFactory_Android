@@ -56,13 +56,13 @@ public class MainActivity extends AppCompatActivity {
     final String toast_menu[] = {
             "햄치즈스페셜","베이컨베스트","햄치즈포테이토","더블소세지","새우","그릴드불고기","베이컨치즈베이글"};
 
-    // 각 테이블별로 시간이 0초 아래가 됐는지 -> 필요할까? 일단 나둠
+    // 각 테이블별로 시간이 0초 아래가 됐는지
     boolean is_time_over[] = {false, false, false, false, false, false};
 
     CountDownTimer countDownTimer0, countDownTimer1, countDownTimer2;
     TextView timer_h[] = new TextView[6]; // Guest 시간 -> 홀에서 보이게
     TextView timer_k[] = new TextView[6]; // Guest 시간 -> 주방에서 보이게
-    TextView txtGredient, txtMenu, txtScore, txtDay; // 재료, 메뉴, 점수, Day
+    TextView txtGredient, txtScore, txtDay; // 재료, 점수, Day 텍스트 뷰
     TextView tv_world_time; // 게임 세계 시간
     TextView order_list_h[] = new TextView[6]; // 테이블 별 주문 리스트뷰 -> 홀 텍스트
     TextView order_list_k[] = new TextView[6]; // 테이블 별 주문 리스트뷰 -> 홀 텍스트
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     Button btn_changeView;
 
     ListView listView; // 완성된 음식 들어가는 리스트뷰
-    ViewFlipper vFlipper;
+    ViewFlipper vFlipper; // 주방, 홀 왔다갔다
 
     RatingBar ratingBar;
     ProgressBar progFood;
@@ -89,11 +89,11 @@ public class MainActivity extends AppCompatActivity {
     HashMap<String,int[]> recipebook = new HashMap<String,int[]>(){{
         put("햄치즈스페셜", new int[]{1,0,1,1,1,1,0,0,0,0,0,0,1,0,0,0});
         put("베이컨베스트", new int[]{1,0,1,0,1,1,1,0,0,0,0,0,1,0,0,0});
-        put("햄치즈포테이토", new int[]{1,0,1,0,1,0,0,1,0,0,0,0,0,0,0,1});
-        put("더블소세지", new int[]{1,0,1,0,1,1,0,0,1,0,0,0,0,0,0,0});
+        put("햄치즈포테이토", new int[]{1,0,1,0,1,0,0,1,0,0,0,0,0,0,1,1});
+        put("더블소세지", new int[]{1,0,1,0,1,1,0,0,1,0,0,0,0,0,1,0});
         put("새우", new int[]{1,0,1,0,1,1,0,0,0,0,1,0,1,0,0,0});
         put("그릴드불고기", new int[]{1,0,1,0,1,1,0,0,0,0,0,1,1,0,0,0});
-        put("베이컨치즈베이글", new int[]{0,1,1,0,1,0,1,0,0,0,0,0,0,0,0,0});
+        put("베이컨치즈베이글", new int[]{0,1,1,0,1,0,1,0,0,0,0,0,0,0,1,1});
     }};
 
 
@@ -135,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
         btnRestart      = (ImageButton) findViewById(R.id.btnRestart);
         btnStart        = (ImageButton) findViewById(R.id.btnStart);
         txtGredient     = (TextView)    findViewById(R.id.txtGredient);
-        txtMenu         = (TextView)    findViewById(R.id.txtMenu);
         progFood        = (ProgressBar) findViewById(R.id.progFood);
         txtDay          = (TextView)    findViewById(R.id.day);
         txtScore        = (TextView)    findViewById(R.id.score);
@@ -158,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
         for(int i=0; i<ingreBtnIDs.length; i++){
             ingreButtons[i] = (ImageButton) findViewById(ingreBtnIDs[i]);
-        }
+        } //재료버튼 등록
 
         // menu등록
         registerForContextMenu(btnRecipe);
@@ -179,10 +178,15 @@ public class MainActivity extends AppCompatActivity {
 
 
         // 첫번째 매개변수에 있는 시간 만큼 스테이지가 실행되고 끝나면 onFinish, 두번째 매개변수 시간마다 onTick 함수 실행됨
-        countDownTimer0 = new CountDownTimer(60 * MIN, SEC) {
+        countDownTimer0 = new CountDownTimer(5 * MIN, 5 * SEC) {
             @Override
             public void onTick(long l) {
 
+                // 별점이 0점 아래가 되면 게임 오버
+                if(GameInstance.getInstance().getRating() <= 0.0f)
+                {
+                    onFinish();
+                }
                 int hour = (int) (world_time / HOUR);
                 int minute = (int) ((world_time % HOUR) / MIN);
 
@@ -204,6 +208,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 // 여기 마감 시간이 되면 다음 스테이지로 넘어가는 코드 추가
+                if(GameInstance.getInstance().getStage() == 3)
+                {
+                    // 마지막 스테이지에서 게임이 끝날 때
+
+                }
                 onFinish();
             }
         }.start();
@@ -216,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
                 CustomDialog customDialog = new CustomDialog(MainActivity.this);
 
                 toast_name = items.get(i).name;
-                toast_quality = Float.toString(items.get(i).quality);
+                toast_quality = Integer.toString(items.get(i).quality);
 
                 customDialog.setDialogListener(new CustomDialog.CustomDialogInterface() {
                     @Override
@@ -232,12 +241,15 @@ public class MainActivity extends AppCompatActivity {
                                 // 서빙 성공 시 손님 나가고 다음 손님 들어올 준비 -> 손님 나가고 점수 계산하는 코드 필요
                                 if(CheckOrder(i,Tag))
                                 {
+                                    int food_quality = items.get(i).quality;
+
                                     items.remove(i);
                                     adapter.notifyDataSetChanged();
 
                                     order_list_h[Tag].setText(""); // 주문 목록 제거
                                     order_list_k[Tag].setText("");
                                     guest[Tag].setVisibility(View.INVISIBLE); // 게스트 안보이게
+                                    exitGuest(Tag, food_quality);
                                     comeGuest(Tag); // 다음 게스트 들어옴
 
                                 }
@@ -268,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //음식의 이름과 재료로 점수를 계산(scoring)
 
-                menu = new Menu(choiceMenu, 0/*scoring(choiceMenu, ingredientList)*/);
+                menu = new Menu(choiceMenu, scoring(choiceMenu, ingredientList));
                 Food food = new Food(menu.menuName, menu.score);
                 //Menu 객체를 생성 Menu(choiceMenu, scoreing());
                 //재료 객체 초기화(다음 음식을 받을 준비)
@@ -286,7 +298,6 @@ public class MainActivity extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(), choiceMenu+"의 조리가 완료되었습니다!", Toast.LENGTH_SHORT).show();
                 txtGredient.setText("");
-                txtMenu.setText("\n\n\n");
             }
         });
 
@@ -296,7 +307,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //메뉴 객체를 어떻게 할지 정해야 함 //굳이 어떻게 할 필요 없나? 새로운 객체를 생성하면 되서
                 txtGredient.setText("");
-                txtMenu.setText("\n\n\n");
                 progFood.setProgress(0);
                 choiceMenu = "";//굳이 필요없음
                 ingredientList = new int[16];
@@ -323,6 +333,9 @@ public class MainActivity extends AppCompatActivity {
         btn_changeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                IsInHall = !IsInHall;
+
                 if(IsInHall)
                 {
                     btn_changeView.setText("주방");
@@ -331,7 +344,6 @@ public class MainActivity extends AppCompatActivity {
                 {
                     btn_changeView.setText("홀");
                 }
-                IsInHall = !IsInHall;
                 vFlipper.showNext();
             }
         });
@@ -448,7 +460,7 @@ public class MainActivity extends AppCompatActivity {
     // 손님이 주문한 음식과 서빙할 음식이 맞는지 틀린지
     private boolean CheckOrder(int index, int table)
     {
-        if(items.get(index).name == order_list_h[table].getText().toString())
+        if(items.get(index).name.equals(order_list_h[table].getText().toString()))
             return true;
         else
             return false;
@@ -507,7 +519,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // 음식 상
-        if(food_quality >= 70)
+        if(food_quality >= 50)
         {
             cur_rating += 0.5f;
             cur_score += food_quality;
@@ -600,7 +612,7 @@ public class MainActivity extends AppCompatActivity {
         dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                txtMenu.setText(choiceMenu+'\n');
+                txtGredient.setText(choiceMenu+'\n');
                 progFood.setProgress(0);
                 Toast.makeText(getApplicationContext(), choiceMenu+"을 선택하였습니다!", Toast.LENGTH_SHORT).show();
             }
@@ -616,11 +628,11 @@ public class MainActivity extends AppCompatActivity {
                 dlg.show();
                 return true;
             case R.id.menu3:
-                dlg.setMessage("빵/계란/해시브라운/치즈/치즈소스");
+                dlg.setMessage("빵/계란/해시브라운/치즈/머스타드/치즈소스");
                 dlg.show();
                 return true;
             case R.id.menu4:
-                dlg.setMessage("빵/계란/소세지/양상추/치즈");
+                dlg.setMessage("빵/계란/소세지/양상추/치즈/머스타드");
                 dlg.show();
                 return true;
             case R.id.menu5:
@@ -632,7 +644,7 @@ public class MainActivity extends AppCompatActivity {
                 dlg.show();
                 return true;
             case R.id.menu7:
-                dlg.setMessage("베이글/계란/베이컨/치즈");
+                dlg.setMessage("베이글/계란/베이컨/치즈/머스타드/치즈소스");
                 dlg.show();
                 return true;
         }
@@ -668,9 +680,16 @@ public class MainActivity extends AppCompatActivity {
     public Integer scoring(String menu, int[] ingredientList)
     {
         int score=0;
+        int index;
         int[] recipe = recipebook.get(menu);
         for(int i=0; i<ingredientList.length; i++){
-            if(recipe[i]<ingredientList[i]) score+=10;
+            index = i;
+            if(recipe[index]==0){
+                if(recipe[index]<ingredientList[index]) score-=10;
+            }
+            else{
+                if(recipe[index]<=ingredientList[index]) score+=10;
+            }
         }
         return score;
     }
@@ -696,9 +715,9 @@ class Human
 class Food
 {
     String name; // 무슨 토스트인지
-    float quality; // 토스트의 음식 완성도
+    int quality; // 토스트의 음식 완성도
 
-    Food(String name, float quality)
+    Food(String name, int quality)
     {
         this.name = name;
         this.quality = quality;

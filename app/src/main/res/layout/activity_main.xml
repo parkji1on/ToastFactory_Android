@@ -773,14 +773,6 @@
                     android:src="@drawable/doma" />
 
                 <TextView
-                    android:id="@+id/txtMenu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="메뉴명"
-                    android:fontFamily="@font/toast"/>
-
-                <TextView
                     android:id="@+id/txtGredient"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -961,7 +953,7 @@
             android:layout_height="40dp"
             android:layout_marginRight="50dp"
             android:background="@drawable/btn_changeview"
-            android:text = "홀"
+            android:text = "주방"
             android:textSize="20dp"
             android:textColor="@color/white"
             android:fontFamily="@font/toast"

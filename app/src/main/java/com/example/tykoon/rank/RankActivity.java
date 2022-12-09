@@ -40,6 +40,7 @@ public class RankActivity extends AppCompatActivity {
     private View myRankLayout;
     private RecyclerView recyclerView;
     private List<UserRank> userRanks;
+    private String name;
 
     private Retrofit mRetrofit;
     private Retrofit_interface retrofit_interface;
@@ -69,7 +70,9 @@ public class RankActivity extends AppCompatActivity {
         getRankList(0);
 
         // TODO: name 변수 받아오기
-        getUserRank("상민");
+        Intent intent = getIntent();
+        name = intent.getStringExtra("name");
+        getUserRank(name);
 
         // refreshBtn logic
         refreshBtn.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +80,7 @@ public class RankActivity extends AppCompatActivity {
             public void onClick(View view) {    // 버튼 호출시 api 재호출
                 userRanks.clear();
                 getRankList(offset);
-                getUserRank("상민");
+                getUserRank(name);
             }
         });
 
@@ -86,6 +89,7 @@ public class RankActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {   // 버튼 호출시 Home 화면으로 이동
                 Intent intent = new Intent(RankActivity.this, HomeActivity.class);
+                intent.putExtra("name", name);
                 startActivity(intent);
             }
         });

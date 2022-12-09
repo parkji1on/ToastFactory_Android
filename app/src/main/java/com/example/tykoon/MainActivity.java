@@ -4,10 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.media.Rating;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -33,11 +36,17 @@ import android.widget.ViewFlipper;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
     // 현재 뷰가 홀인지, 주방인지
     boolean IsInHall = true;
+
+    // 메인 액티비티에서 다른 액티비티로 갈 때 true로 설정
+    // 타이머를 멈추기 위해 만든 변수
+    boolean IsFinish = false;
+    public static boolean PauseToResume = false;
 
     // 시간 상수
     final static int SEC = 1000;
@@ -124,6 +133,13 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Food> items;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        IsFinish = false;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -142,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
         txtDay          = (TextView)    findViewById(R.id.day);
         txtScore        = (TextView)    findViewById(R.id.score);
         ratingBar       = (RatingBar)   findViewById(R.id.life);
+        pause_btn       = (ImageButton) findViewById(R.id.pausebtn);
 
         items = new ArrayList<>();
         final GameAdapter adapter = new GameAdapter(this, items);
@@ -179,16 +196,27 @@ public class MainActivity extends AppCompatActivity {
             comeGuest(index);
         }
 
-
         // 첫번째 매개변수에 있는 시간 만큼 스테이지가 실행되고 끝나면 onFinish, 두번째 매개변수 시간마다 onTick 함수 실행됨
-        countDownTimer0 = new CountDownTimer(5 * MIN, 5 * SEC) {
+        countDownTimer0 = new CountDownTimer(180 * SEC, 3 * SEC) {
             @Override
             public void onTick(long l) {
 
-                // 별점이 0점 아래가 되면 게임 오버
+                // 만약 액티비티의 이동이 발생하면 게임 세계 시간을 멈춘다
+                if(IsFinish)
+                {
+                    this.cancel();
+                }
+                // 별점이 0점 아래가 되면 게임 오버 후 홈 화면으로 이동
                 if(GameInstance.getInstance().getRating() <= 0.0f)
                 {
-                    onFinish();
+                    Toast.makeText(getApplicationContext(), "망했어요!!", Toast.LENGTH_LONG).show();
+                    GameInstance.getInstance().init(); // 인스턴스 초기화해서 게임 정보 초기화함
+
+                    IsFinish = true;
+
+                    // 홈으로 돌아가기
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                    startActivity(intent);
                 }
                 int hour = (int) (world_time / HOUR);
                 int minute = (int) ((world_time % HOUR) / MIN);
@@ -205,18 +233,19 @@ public class MainActivity extends AppCompatActivity {
 
                 world_time += (10 * MIN);
 
-                // 1초마다
             }
 
             @Override
             public void onFinish() {
-                // 여기 마감 시간이 되면 다음 스테이지로 넘어가는 코드 추가
-                if(GameInstance.getInstance().getStage() == 3)
-                {
-                    // 마지막 스테이지에서 게임이 끝날 때
+                // 한 스테이지가 끝나면 정산 화면이 출력됨
 
-                }
-                onFinish();
+                Intent intent = new Intent(getApplicationContext(), SettlementActivity.class);
+                intent.putExtra("status",1);
+
+                IsFinish = true;
+
+                onStop();
+                startActivity(intent);
             }
         }.start();
 
@@ -230,6 +259,7 @@ public class MainActivity extends AppCompatActivity {
                 toast_name = items.get(i).name;
                 toast_quality = Integer.toString(items.get(i).quality);
 
+                customDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 customDialog.setDialogListener(new CustomDialog.CustomDialogInterface() {
                     @Override
                     public void BtnClicked(int Tag) {
@@ -285,7 +315,7 @@ public class MainActivity extends AppCompatActivity {
 
                 menu = new Menu(choiceMenu, scoring(choiceMenu, ingredientList));
                 Food food = new Food(menu.menuName, menu.score);
-                //Menu 객체를 생성 Menu(choiceMenu, scoreing());
+                //Menu 객체를 생성 Menu(choiceMenu, scoring());
                 //재료 객체 초기화(다음 음식을 받을 준비)
                 ingredientList=new int[16];
                 //progress bar 진행률 업데이트
@@ -329,6 +359,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        pause_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getApplicationContext(), SettlementActivity.class);
+                intent.putExtra("status",0);
+
+                startActivity(intent);
+            }
+        });
         // 주방 -> 홀 / 홀 -> 주방으로 이동할 수 있음
         btn_changeView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -395,10 +435,12 @@ public class MainActivity extends AppCompatActivity {
 
         is_time_over[index] = false;
 
-        // 5초가 지나면 손님 들어옴 Tick은 필요없음
-        countDownTimer1 = new CountDownTimer(5 * SEC, 5 * SEC) {
+        // 5초가 지나면 손님 들어옴
+        countDownTimer1 = new CountDownTimer(5 * SEC, SEC) {
             @Override
             public void onTick(long l) {
+                if(IsFinish)
+                    this.cancel();
             }
 
             @Override
@@ -406,6 +448,8 @@ public class MainActivity extends AppCompatActivity {
                 Human human = new Human();
                 int patience = human.patience;
                 int type = human.type;
+                // 손님 들어오면 손님 수 증가
+                GameInstance.getInstance().setVisited_guest(GameInstance.getInstance().getVisited_guest() + 1);
 
                 guest[index].setImageResource(guest_image[type]);
                 // 손님이 들어오고 나감을 Visibility로 설정
@@ -434,6 +478,11 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onTick(long l) {
                         if(guest[index].getVisibility() == View.INVISIBLE)
+                        {
+                            this.cancel();
+                        }
+
+                        if(IsFinish)
                         {
                             this.cancel();
                         }
@@ -700,7 +749,6 @@ class Human
 {
     int patience; // 사람 인내심 -> 상/중/하로 구분
     int type; // 사람 이미지
-    float satisfaction; // 만족도
 
     // 랜덤으로 사람의 인내심과 이미지 타입을 정함
     Human()

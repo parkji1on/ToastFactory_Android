@@ -14,17 +14,18 @@ public class GameInstance {
         return GI;
     }
 
-    private String playerName = ""; // 플레이어 이름
+    private String playerID = ""; // 플레이어 아이디
     private float rating = 3.0f; // 별점(목숨)
     private int score = 0; // 점수
     private short stage = 1; // 몇 스테이지인지
+    private int visited_guest = 0; // 방문한 손님 수
 
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
+    public void setPlayerID(String playerName) {
+        this.playerID = playerName;
     }
 
-    public String getPlayerName() {
-        return playerName;
+    public String getPlayerID() {
+        return playerID;
     }
 
     public void setRating(float rating) {
@@ -49,5 +50,17 @@ public class GameInstance {
 
     public short getStage() {
         return stage;
+    }
+
+    public void setVisited_guest(int visited_guest) { this.visited_guest = visited_guest; }
+
+    public int getVisited_guest() { return visited_guest; }
+
+    public void init()
+    {
+        this.rating = 3.0f;
+        this.score = 0;
+        this.stage = 1;
+        this.visited_guest = 0;
     }
 }

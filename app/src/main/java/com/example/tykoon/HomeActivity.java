@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tykoon.rank.RankActivity;
 
@@ -17,6 +18,12 @@ public class HomeActivity extends AppCompatActivity {
     ImageButton btnGameStart, btnRanking;
     TextView userNameTextView;
     String name;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,8 +35,9 @@ public class HomeActivity extends AppCompatActivity {
         btnRanking = (ImageButton) findViewById(R.id.btnRanking);
 
         userNameTextView = findViewById(R.id.userNameTextView);
-        Intent intent = getIntent();
-        name = intent.getStringExtra("name");
+        // Intent intent = getIntent();
+        // name = intent.getStringExtra("name");
+        name = GameInstance.getInstance().getPlayerID();
 
         userNameTextView.setText("안녕하세요 "+name+"님");
 

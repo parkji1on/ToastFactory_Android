@@ -56,13 +56,13 @@ public class MainActivity extends AppCompatActivity {
     final String toast_menu[] = {
             "햄치즈스페셜","베이컨베스트","햄치즈포테이토","더블소세지","새우","그릴드불고기","베이컨치즈베이글"};
 
-    // 각 테이블별로 시간이 0초 아래가 됐는지 -> 필요할까? 일단 나둠
+    // 각 테이블별로 시간이 0초 아래가 됐는지
     boolean is_time_over[] = {false, false, false, false, false, false};
 
     CountDownTimer countDownTimer0, countDownTimer1, countDownTimer2;
     TextView timer_h[] = new TextView[6]; // Guest 시간 -> 홀에서 보이게
     TextView timer_k[] = new TextView[6]; // Guest 시간 -> 주방에서 보이게
-    TextView txtGredient, txtScore, txtDay; // 재료, 점수, Day
+    TextView txtGredient, txtScore, txtDay; // 재료, 점수, Day 텍스트 뷰
     TextView tv_world_time; // 게임 세계 시간
     TextView order_list_h[] = new TextView[6]; // 테이블 별 주문 리스트뷰 -> 홀 텍스트
     TextView order_list_k[] = new TextView[6]; // 테이블 별 주문 리스트뷰 -> 홀 텍스트
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     Button btn_changeView;
 
     ListView listView; // 완성된 음식 들어가는 리스트뷰
-    ViewFlipper vFlipper;
+    ViewFlipper vFlipper; // 주방, 홀 왔다갔다
 
     RatingBar ratingBar;
     ProgressBar progFood;
@@ -203,6 +203,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 // 여기 마감 시간이 되면 다음 스테이지로 넘어가는 코드 추가
+                if(GameInstance.getInstance().getStage() == 3)
+                {
+                    // 마지막 스테이지에서 게임이 끝날 때
+                }
                 onFinish();
             }
         }.start();
@@ -267,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //음식의 이름과 재료로 점수를 계산(scoring)
 
-                menu = new Menu(choiceMenu, 0/*scoring(choiceMenu, ingredientList)*/);
+                menu = new Menu(choiceMenu, scoring(choiceMenu, ingredientList));
                 Food food = new Food(menu.menuName, menu.score);
                 //Menu 객체를 생성 Menu(choiceMenu, scoreing());
                 //재료 객체 초기화(다음 음식을 받을 준비)
@@ -320,6 +324,9 @@ public class MainActivity extends AppCompatActivity {
         btn_changeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                IsInHall = !IsInHall;
+
                 if(IsInHall)
                 {
                     btn_changeView.setText("주방");
@@ -328,7 +335,6 @@ public class MainActivity extends AppCompatActivity {
                 {
                     btn_changeView.setText("홀");
                 }
-                IsInHall = !IsInHall;
                 vFlipper.showNext();
             }
         });

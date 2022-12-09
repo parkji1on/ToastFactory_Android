@@ -1,5 +1,6 @@
 package com.example.tykoon.rank;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tykoon.HomeActivity;
+import com.example.tykoon.MainActivity;
 import com.example.tykoon.R;
 import com.example.tykoon.retrofit.Retrofit_interface;
 import com.example.tykoon.retrofit.model.BaseResponse;
@@ -37,6 +40,7 @@ public class RankActivity extends AppCompatActivity {
     private View myRankLayout;
     private RecyclerView recyclerView;
     private List<UserRank> userRanks;
+    private String name;
 
     private Retrofit mRetrofit;
     private Retrofit_interface retrofit_interface;
@@ -66,7 +70,9 @@ public class RankActivity extends AppCompatActivity {
         getRankList(0);
 
         // TODO: name 변수 받아오기
-        getUserRank("상민");
+        Intent intent = getIntent();
+        name = intent.getStringExtra("name");
+        getUserRank(name);
 
         // refreshBtn logic
         refreshBtn.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +80,17 @@ public class RankActivity extends AppCompatActivity {
             public void onClick(View view) {    // 버튼 호출시 api 재호출
                 userRanks.clear();
                 getRankList(offset);
-                getUserRank("상민");
+                getUserRank(name);
+            }
+        });
+
+        // BackBtn logic
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {   // 버튼 호출시 Home 화면으로 이동
+                Intent intent = new Intent(RankActivity.this, HomeActivity.class);
+                intent.putExtra("name", name);
+                startActivity(intent);
             }
         });
 

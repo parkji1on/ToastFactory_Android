@@ -206,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
                 if(GameInstance.getInstance().getStage() == 3)
                 {
                     // 마지막 스테이지에서 게임이 끝날 때
+
                 }
                 onFinish();
             }
@@ -247,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
                                 // 서빙 실패 시 토스트만 사라짐
                                 else
                                 {
+                                    Toast.makeText(getApplicationContext(), "잘못서빙",Toast.LENGTH_SHORT);
                                     items.remove(i);
                                     adapter.notifyDataSetChanged();
                                 }
@@ -671,13 +673,15 @@ public class MainActivity extends AppCompatActivity {
     public Integer scoring(String menu, int[] ingredientList)
     {
         int score=0;
+        int index;
         int[] recipe = recipebook.get(menu);
         for(int i=0; i<ingredientList.length; i++){
-            if(recipe[i]==0){
-                if(recipe[i]<ingredientList[i]) score-=10;
+            index = i;
+            if(recipe[index]==0){
+                if(recipe[index]<ingredientList[index]) score-=10;
             }
             else{
-                if(recipe[i]<=ingredientList[i]) score+=10;
+                if(recipe[index]<=ingredientList[index]) score+=10;
             }
         }
         return score;

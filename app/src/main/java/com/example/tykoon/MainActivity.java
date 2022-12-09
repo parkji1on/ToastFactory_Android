@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.Rating;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -75,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
     ListView listView; // 완성된 음식 들어가는 리스트뷰
     ViewFlipper vFlipper; // 주방, 홀 왔다갔다
+    View dialogView;    //btn_item을 눌렀을때 나오는 대화상자
 
     RatingBar ratingBar;
     ProgressBar progFood;
@@ -313,21 +316,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /* 임시로 완성된 음식 목록에 올리려고 한 코드 -> 나중에 주방이랑 연계
+
         item_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Random rand = new Random();
+                dialogView = (View) View.inflate(MainActivity.this, R.layout.item_box, null);
+                android.app.AlertDialog.Builder dlg = new android.app.AlertDialog.Builder(MainActivity.this);
+                dlg.setTitle("아이템");
+                dlg.setView(dialogView);
 
-                String str = toast_menu[rand.nextInt(toast_menu.length)];
-
-                Food food = new Food(str, 50.0f);
-                items.add(food);
-
-                adapter.notifyDataSetChanged();
+                dlg.show();
             }
         });
-*/
 
         // 주방 -> 홀 / 홀 -> 주방으로 이동할 수 있음
         btn_changeView.setOnClickListener(new View.OnClickListener() {

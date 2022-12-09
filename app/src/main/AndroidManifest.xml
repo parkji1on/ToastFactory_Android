@@ -22,9 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomeActivity" android:label="Home Activity"/>
-        <activity android:name=".MainActivity" android:label="Game Activity"/>
-        <activity android:name=".rank.RankActivity" android:label="Rank Activity"/>
+        <activity android:name=".HomeActivity" android:label="Home Activity" android:theme = "@style/FullScreenTheme"/>
+        <activity android:name=".MainActivity" android:label="Game Activity" android:theme = "@style/FullScreenTheme"/>
+        <activity android:name=".rank.RankActivity" android:label="Rank Activity" android:theme = "@style/FullScreenTheme"/>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.example.tykoon.rank;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tykoon.HomeActivity;
+import com.example.tykoon.MainActivity;
 import com.example.tykoon.R;
 import com.example.tykoon.retrofit.Retrofit_interface;
 import com.example.tykoon.retrofit.model.BaseResponse;
@@ -75,6 +78,15 @@ public class RankActivity extends AppCompatActivity {
                 userRanks.clear();
                 getRankList(offset);
                 getUserRank("상민");
+            }
+        });
+
+        // BackBtn logic
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {   // 버튼 호출시 Home 화면으로 이동
+                Intent intent = new Intent(RankActivity.this, HomeActivity.class);
+                startActivity(intent);
             }
         });
 

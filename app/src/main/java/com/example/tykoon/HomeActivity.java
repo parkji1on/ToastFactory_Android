@@ -30,6 +30,7 @@ public class HomeActivity extends AppCompatActivity {
         btnGameStart.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
+                System.out.println("check isClickable");
                 dialogView = (View) View.inflate(HomeActivity.this, R.layout.dialog1, null);
                 AlertDialog.Builder dlg = new AlertDialog.Builder(HomeActivity.this);
                 dlg.setTitle("사용자 정보 입력");

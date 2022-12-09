@@ -66,7 +66,7 @@ public class RankActivity extends AppCompatActivity {
         getRankList(0);
 
         // TODO: name 변수 받아오기
-        getUserRank("박상민");
+        getUserRank("상민");
 
         // refreshBtn logic
         refreshBtn.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +74,7 @@ public class RankActivity extends AppCompatActivity {
             public void onClick(View view) {    // 버튼 호출시 api 재호출
                 userRanks.clear();
                 getRankList(offset);
+                getUserRank("상민");
             }
         });
 

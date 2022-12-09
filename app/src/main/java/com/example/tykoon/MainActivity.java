@@ -178,10 +178,15 @@ public class MainActivity extends AppCompatActivity {
 
 
         // 첫번째 매개변수에 있는 시간 만큼 스테이지가 실행되고 끝나면 onFinish, 두번째 매개변수 시간마다 onTick 함수 실행됨
-        countDownTimer0 = new CountDownTimer(60 * MIN, SEC) {
+        countDownTimer0 = new CountDownTimer(5 * MIN, 5 * SEC) {
             @Override
             public void onTick(long l) {
 
+                // 별점이 0점 아래가 되면 게임 오버
+                if(GameInstance.getInstance().getRating() <= 0.0f)
+                {
+                    onFinish();
+                }
                 int hour = (int) (world_time / HOUR);
                 int minute = (int) ((world_time % HOUR) / MIN);
 
@@ -220,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
                 CustomDialog customDialog = new CustomDialog(MainActivity.this);
 
                 toast_name = items.get(i).name;
-                toast_quality = Float.toString(items.get(i).quality);
+                toast_quality = Integer.toString(items.get(i).quality);
 
                 customDialog.setDialogListener(new CustomDialog.CustomDialogInterface() {
                     @Override
@@ -236,19 +241,21 @@ public class MainActivity extends AppCompatActivity {
                                 // 서빙 성공 시 손님 나가고 다음 손님 들어올 준비 -> 손님 나가고 점수 계산하는 코드 필요
                                 if(CheckOrder(i,Tag))
                                 {
+                                    int food_quality = items.get(i).quality;
+
                                     items.remove(i);
                                     adapter.notifyDataSetChanged();
 
                                     order_list_h[Tag].setText(""); // 주문 목록 제거
                                     order_list_k[Tag].setText("");
                                     guest[Tag].setVisibility(View.INVISIBLE); // 게스트 안보이게
+                                    exitGuest(Tag, food_quality);
                                     comeGuest(Tag); // 다음 게스트 들어옴
 
                                 }
                                 // 서빙 실패 시 토스트만 사라짐
                                 else
                                 {
-                                    Toast.makeText(getApplicationContext(), "잘못서빙",Toast.LENGTH_SHORT);
                                     items.remove(i);
                                     adapter.notifyDataSetChanged();
                                 }
@@ -453,7 +460,7 @@ public class MainActivity extends AppCompatActivity {
     // 손님이 주문한 음식과 서빙할 음식이 맞는지 틀린지
     private boolean CheckOrder(int index, int table)
     {
-        if(items.get(index).name == order_list_h[table].getText().toString())
+        if(items.get(index).name.equals(order_list_h[table].getText().toString()))
             return true;
         else
             return false;
@@ -708,9 +715,9 @@ class Human
 class Food
 {
     String name; // 무슨 토스트인지
-    float quality; // 토스트의 음식 완성도
+    int quality; // 토스트의 음식 완성도
 
-    Food(String name, float quality)
+    Food(String name, int quality)
     {
         this.name = name;
         this.quality = quality;

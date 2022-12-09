@@ -89,11 +89,11 @@ public class MainActivity extends AppCompatActivity {
     HashMap<String,int[]> recipebook = new HashMap<String,int[]>(){{
         put("햄치즈스페셜", new int[]{1,0,1,1,1,1,0,0,0,0,0,0,1,0,0,0});
         put("베이컨베스트", new int[]{1,0,1,0,1,1,1,0,0,0,0,0,1,0,0,0});
-        put("햄치즈포테이토", new int[]{1,0,1,0,1,0,0,1,0,0,0,0,0,0,0,1});
-        put("더블소세지", new int[]{1,0,1,0,1,1,0,0,1,0,0,0,0,0,0,0});
+        put("햄치즈포테이토", new int[]{1,0,1,0,1,0,0,1,0,0,0,0,0,0,1,1});
+        put("더블소세지", new int[]{1,0,1,0,1,1,0,0,1,0,0,0,0,0,1,0});
         put("새우", new int[]{1,0,1,0,1,1,0,0,0,0,1,0,1,0,0,0});
         put("그릴드불고기", new int[]{1,0,1,0,1,1,0,0,0,0,0,1,1,0,0,0});
-        put("베이컨치즈베이글", new int[]{0,1,1,0,1,0,1,0,0,0,0,0,0,0,0,0});
+        put("베이컨치즈베이글", new int[]{0,1,1,0,1,0,1,0,0,0,0,0,0,0,1,1});
     }};
 
 
@@ -510,7 +510,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // 음식 상
-        if(food_quality >= 70)
+        if(food_quality >= 50)
         {
             cur_rating += 0.5f;
             cur_score += food_quality;
@@ -619,11 +619,11 @@ public class MainActivity extends AppCompatActivity {
                 dlg.show();
                 return true;
             case R.id.menu3:
-                dlg.setMessage("빵/계란/해시브라운/치즈/치즈소스");
+                dlg.setMessage("빵/계란/해시브라운/치즈/머스타드/치즈소스");
                 dlg.show();
                 return true;
             case R.id.menu4:
-                dlg.setMessage("빵/계란/소세지/양상추/치즈");
+                dlg.setMessage("빵/계란/소세지/양상추/치즈/머스타드");
                 dlg.show();
                 return true;
             case R.id.menu5:
@@ -635,7 +635,7 @@ public class MainActivity extends AppCompatActivity {
                 dlg.show();
                 return true;
             case R.id.menu7:
-                dlg.setMessage("베이글/계란/베이컨/치즈");
+                dlg.setMessage("베이글/계란/베이컨/치즈/머스타드/치즈소스");
                 dlg.show();
                 return true;
         }

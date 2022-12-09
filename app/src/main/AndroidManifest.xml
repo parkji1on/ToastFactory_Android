@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Tykoon"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:theme = "@style/FullScreenTheme"
             android:exported="true">
             <intent-filter>
@@ -22,8 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<!--        <activity android:name=".MainActivity" android:label="Game Activity"/>-->
-        <activity android:name=".rank.RankActivity" android:label="Rank Activity"/>
+        <activity android:name=".HomeActivity" android:label="Home Activity" android:theme = "@style/FullScreenTheme"/>
+        <activity android:name=".MainActivity" android:label="Game Activity" android:theme = "@style/FullScreenTheme"/>
+        <activity android:name=".rank.RankActivity" android:label="Rank Activity" android:theme = "@style/FullScreenTheme"/>
     </application>
 
 </manifest>

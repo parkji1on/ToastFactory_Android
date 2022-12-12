@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -18,10 +19,18 @@ public class HomeActivity extends AppCompatActivity {
     ImageButton btnGameStart, btnRanking;
     TextView userNameTextView;
     String name;
+    static MediaPlayer mP = null;
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        // 배경음악 넣음
+        if(mP == null) {
+            mP = MediaPlayer.create(getApplicationContext(), R.raw.toastfactory_bgm);
+            mP.start();
+            mP.setLooping(true);
+        }
 
     }
 

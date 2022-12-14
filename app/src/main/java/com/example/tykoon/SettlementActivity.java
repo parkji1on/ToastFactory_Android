@@ -97,6 +97,7 @@ public class SettlementActivity extends AppCompatActivity {
                         // 마지막 스테이지가 아닌 경우 다음 스테이지로 넘어감
                         GameInstance.getInstance().setStage((short) (cur_stage + 1));
                         GameInstance.getInstance().setVisited_guest(0);
+                        GameInstance.getInstance().setSuccess_serv(0);
 
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);

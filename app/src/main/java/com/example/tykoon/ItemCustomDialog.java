@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -33,7 +34,7 @@ public class ItemCustomDialog extends Dialog {
                     GameInstance.getInstance().setRating(GameInstance.getInstance().getRating()+0.5f);
                     txt_item0.setText(item0_rest.toString());
                 }
-                //else Toast.makeText(getApplicationContext(), "아이템의 수가 부족합니다.", Toast.LENGTH_SHORT).show();
+                else Toast.makeText(context, "아이템의 수가 부족합니다.", Toast.LENGTH_SHORT).show();
             }
         });
 

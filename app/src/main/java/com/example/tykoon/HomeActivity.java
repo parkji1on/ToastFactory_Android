@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tykoon.rank.RankActivity;
 
@@ -17,6 +19,20 @@ public class HomeActivity extends AppCompatActivity {
     ImageButton btnGameStart, btnRanking;
     TextView userNameTextView;
     String name;
+    static MediaPlayer mP = null;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // 배경음악 넣음
+        if(mP == null) {
+            mP = MediaPlayer.create(getApplicationContext(), R.raw.toastfactory_bgm);
+            mP.start();
+            mP.setLooping(true);
+        }
+
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,8 +44,9 @@ public class HomeActivity extends AppCompatActivity {
         btnRanking = (ImageButton) findViewById(R.id.btnRanking);
 
         userNameTextView = findViewById(R.id.userNameTextView);
-        Intent intent = getIntent();
-        name = intent.getStringExtra("name");
+        // Intent intent = getIntent();
+        // name = intent.getStringExtra("name");
+        name = GameInstance.getInstance().getPlayerID();
 
         userNameTextView.setText("안녕하세요 "+name+"님");
 

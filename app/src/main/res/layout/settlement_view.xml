@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_home"
+    android:gravity="center">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="300dp"
+        android:layout_height="600dp"
+        android:background="@drawable/bg_settlement">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:gravity="center">
+
+            <TextView
+                android:id = "@+id/settlement_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "정산"
+                android:textColor="@color/white"
+                android:textSize="50dp"
+                android:fontFamily="@font/toast">
+
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text = "Day "
+                android:textColor="@color/white"
+                android:textSize="30dp"
+                android:fontFamily="@font/toast">
+
+            </TextView>
+
+            <TextView
+                android:id = "@+id/settlement_day"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text = "1"
+                android:textColor="@color/white"
+                android:textSize="30dp"
+                android:fontFamily="@font/toast">
+
+            </TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="점수"
+                android:textSize="30dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/toast">
+            </TextView>
+
+            <TextView
+                android:id = "@+id/settlement_score"
+                android:layout_gravity="right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="130dp"
+                android:text="100"
+                android:textSize="30dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/toast">
+
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="별점"
+                android:textSize="30dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/toast">
+            </TextView>
+
+            <TextView
+                android:id = "@+id/settlement_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp"
+                android:text="3.0"
+                android:textSize="30dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/toast">
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/5.0"
+                android:textSize="30dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/toast">
+
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="방문한 손님"
+                android:textSize="30dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/toast">
+            </TextView>
+
+            <TextView
+                android:id = "@+id/settlement_guest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:text="10"
+                android:textSize="30dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/toast">
+            </TextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="서빙 성공"
+                android:textSize="30dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/toast">
+            </TextView>
+
+            <TextView
+                android:id = "@+id/settlement_serve"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp"
+                android:gravity="right"
+                android:text="10"
+                android:textSize="30dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/toast">
+            </TextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp">
+
+            <ImageButton
+                android:id = "@+id/settlement_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:src = "@drawable/btn_back"
+                android:background="@android:color/transparent"
+                >
+            </ImageButton>
+
+            <ImageButton
+                android:id = "@+id/settlement_continue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:src = "@drawable/btn_continue"
+                android:background="@android:color/transparent"
+                >
+            </ImageButton>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

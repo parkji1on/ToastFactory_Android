@@ -357,16 +357,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        //아이템 버튼을 눌렀을 경우
         btnItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialogView = (View) View.inflate(MainActivity.this, R.layout.item_box, null);
-                android.app.AlertDialog.Builder dlg = new android.app.AlertDialog.Builder(MainActivity.this);
-                dlg.setTitle("아이템");
-                dlg.setView(dialogView);
-
-                dlg.show();
+                ItemCustomDialog item_box = new ItemCustomDialog(MainActivity.this, GameInstance.getInstance().getItem_rest());
+                item_box.setCanceledOnTouchOutside(true);
+                item_box.setCancelable(true);
+                item_box.show();
             }
         });
 

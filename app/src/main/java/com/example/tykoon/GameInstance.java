@@ -21,6 +21,7 @@ public class GameInstance {
     private short stage = 1;        // 몇 스테이지(Day)인지
     private int visited_guest = 0;  // 방문한 손님 수
     private int success_serv = 0;   // 성공한 서빙 수
+    private int item_rest = 3;      //사용가능한 아이템 수
 
     public void setPlayerID(String playerName) {
         this.playerID = playerName;
@@ -66,6 +67,10 @@ public class GameInstance {
         return success_serv;
     }
 
+    public void setItem_rest(int item_rest) {this.item_rest = item_rest;}
+
+    public int getItem_rest() {return item_rest;}
+
     public void init()
     {
         this.rating = 3.0f;
@@ -73,5 +78,6 @@ public class GameInstance {
         this.stage = 1;
         this.visited_guest = 0;
         this.success_serv = 0;
+        item_rest = 3;  //처음 시작할 때 아이템을 갖고 시작함
     }
 }

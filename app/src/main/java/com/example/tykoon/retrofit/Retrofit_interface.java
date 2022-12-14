@@ -2,7 +2,6 @@ package com.example.tykoon.retrofit;
 
 import com.example.tykoon.retrofit.model.BaseResponse;
 import com.example.tykoon.retrofit.model.PostMemberReq;
-import com.example.tykoon.retrofit.model.RankListRes;
 import com.example.tykoon.retrofit.model.UserRank;
 
 import java.util.List;
@@ -35,4 +34,5 @@ public interface Retrofit_interface {
     Call<BaseResponse<String>> patchMemberScore(
             @Query("name") String name,
             @Query("score") Long score);
+
 }

@@ -11,6 +11,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,9 +27,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.example.tykoon.retrofit.Retrofit_interface;
+import com.example.tykoon.retrofit.model.BaseResponse;
+
+import java.io.InterruptedIOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -123,6 +134,15 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<Food> items;
 
+    /** retrofit 변수 */
+    private Retrofit mRetrofit;
+    private Retrofit_interface retrofit_interface;
+
+    private Call<BaseResponse<String>> scoreRes;
+
+    /** user name */
+    String name = "";
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -175,6 +195,8 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), SettlementActivity.class);
                     intent.putExtra("status", 1);
 
+                    patchMemberScore();
+
                     startActivity(intent);
                 }
             }.start();
@@ -220,6 +242,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        setRetrofitInit();
+
+        /** user name */
+        Intent intent = getIntent();
+        name = intent.getStringExtra("name");
 
         Init();
         final GameAdapter adapter = new GameAdapter(this, items);
@@ -775,6 +803,47 @@ public class MainActivity extends AppCompatActivity {
         }
         return score;
     }
+
+
+    /**
+     * Retrofit 기본 URL 설정 메서드
+     * baseUrl을 설정해준 해당 Retrofit 객체를 retrofit_interface 객체로 사용
+     * */
+    private void setRetrofitInit() {
+        mRetrofit = new Retrofit.Builder()
+                .baseUrl("http://toastfactory.shop/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        retrofit_interface = mRetrofit.create(Retrofit_interface.class);
+    }
+
+    /** @PATCH("rank/score") */
+    private void patchMemberScore() {
+        scoreRes = retrofit_interface.patchMemberScore(name, Long.valueOf(GameInstance.getInstance().getScore()));
+        scoreRes.enqueue(mRetrofitScoreCallback);
+    }
+
+    private Callback<BaseResponse<String>> mRetrofitScoreCallback = new Callback<BaseResponse<String>>() {
+        @Override
+        public void onResponse(Call<BaseResponse<String>> call, Response<BaseResponse<String>> response) {
+            // 성공 여부 확인
+            if (!response.isSuccessful()){
+                Log.getStackTraceString(new InterruptedIOException());
+                return;
+            }
+
+            if (response.body().getCode() == 1000) {
+                Toast.makeText(MainActivity.this, "점수 업데이트 성공!", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
+        @Override
+        public void onFailure(Call<BaseResponse<String>> call, Throwable t) {
+            t.printStackTrace();
+        }
+    };
+
 }
 
 // 손님의 정보를 담는 Human 클래스

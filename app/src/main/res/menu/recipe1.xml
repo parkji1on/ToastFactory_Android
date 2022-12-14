@@ -18,7 +18,7 @@
     </item>
     <item
         android:id="@+id/menu5"
-        android:title="새우">
+        android:title="새우스페셜">
     </item>
     <item
         android:id="@+id/menu6"

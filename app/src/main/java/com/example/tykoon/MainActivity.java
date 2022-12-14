@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
     // 토스트 메뉴들
     final String toast_menu[] = {
-            "햄치즈스페셜","베이컨베스트","햄치즈포테이토","더블소세지","새우","그릴드불고기","베이컨치즈베이글"};
+            "햄치즈스페셜","베이컨베스트","햄치즈포테이토","더블소세지","새우스페셜","그릴드불고기","베이컨치즈베이글"};
 
     // 각 테이블별로 시간이 0초 아래가 됐는지
     boolean is_time_over[] = {false, false, false, false, false, false};
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         put("베이컨베스트", new int[]{1,0,1,0,1,1,1,0,0,0,0,0,1,0,0,0});
         put("햄치즈포테이토", new int[]{1,0,1,0,1,0,0,1,0,0,0,0,0,0,1,1});
         put("더블소세지", new int[]{1,0,1,0,1,1,0,0,1,0,0,0,0,0,1,0});
-        put("새우", new int[]{1,0,1,0,1,1,0,0,0,0,1,0,1,0,0,0});
+        put("새우스페셜", new int[]{1,0,1,0,1,1,0,0,0,0,1,0,1,0,0,0});
         put("그릴드불고기", new int[]{1,0,1,0,1,1,0,0,0,0,0,1,1,0,0,0});
         put("베이컨치즈베이글", new int[]{0,1,1,0,1,0,1,0,0,0,0,0,0,0,1,1});
     }};
@@ -325,6 +325,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //음식의 이름과 재료로 점수를 계산(scoring)
+                if(choiceMenu == null)
+                    return;
+
                 Food food = new Food(choiceMenu, scoring(choiceMenu, ingredientList));
 
                 //재료 객체 초기화(다음 음식을 받을 준비)
@@ -352,7 +355,7 @@ public class MainActivity extends AppCompatActivity {
                 //메뉴 객체를 어떻게 할지 정해야 함 //굳이 어떻게 할 필요 없나? 새로운 객체를 생성하면 되서
                 tv_Ingredient.setText("");
                 progFood.setProgress(0);
-                choiceMenu = "";//굳이 필요없음
+                choiceMenu = null;
                 ingredientList = new int[16];
             }
         });
@@ -792,6 +795,7 @@ public class MainActivity extends AppCompatActivity {
         int score=0;
         int index;
         int[] recipe = recipeBook.get(menu);
+
         for(int i=0; i<ingredientList.length; i++){
             index = i;
             if(recipe[index]==0){

@@ -113,9 +113,12 @@ public class SettlementActivity extends AppCompatActivity {
                                 GameInstance.getInstance().setScore(cur_score + 5);
                             }
 
-                            // 랭킹 부분 여기다 하시면 될거에요
-                            // GameInstance.getInstance().getScore() -> 이거를 랭킹에 올리시면 될것같습니다
                             patchMemberScore();
+
+                            Toast.makeText(getApplicationContext(), "게임 클리어",Toast.LENGTH_SHORT).show();
+                            // 홈 화면으로
+                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                            startActivity(intent);
                         }
                         // 마지막 스테이지가 아닌 경우 다음 스테이지로 넘어감
                         GameInstance.getInstance().setStage((short) (cur_stage + 1));

@@ -1,14 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="#734015"
+    android:padding="5dp"
+    app:circularflow_radiusInDP="20dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="#ffbb20"
+        android:padding="8dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="#734015">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:background="#ffbb20">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/toast"
+                    android:textColor="@color/white"
+                    android:text="아이템"
+                    android:textSize="30dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="3dp">
 
-    <Button
-        android:id="@+id/btn_item0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="옥외 광고"/>
+                <ImageButton
+                    android:id="@+id/btn_item0"
+                    android:layout_width="120dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/btn_item0"/>
 
+                <TextView
+                    android:id="@+id/txt_item0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/toast"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:textSize="23dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

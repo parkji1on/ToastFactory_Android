@@ -70,10 +70,11 @@ public class SettlementActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GameInstance.getInstance().init();
+                GameInstance.getInstance().init(); // 홈으로 돌아갈 때 이때까지 게임 정보 초기화
 
                 Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -90,7 +91,7 @@ public class SettlementActivity extends AppCompatActivity {
                         break;
                     case 1:
                         short cur_stage = GameInstance.getInstance().getStage();
-                        // 마지막 스테이지인 경우 랭킹 부분으로
+                        // 마지막 스테이지인 경우 계속 누르면 랭킹에 등록
                         if(cur_stage == 3)
                         {
                             // 이때까지 얻은 별점에 따라 점수에 가산점 부여
@@ -119,6 +120,8 @@ public class SettlementActivity extends AppCompatActivity {
                             // 홈 화면으로
                             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                             startActivity(intent);
+                            finish();
+                            return;
                         }
                         // 마지막 스테이지가 아닌 경우 다음 스테이지로 넘어감
                         GameInstance.getInstance().setStage((short) (cur_stage + 1));

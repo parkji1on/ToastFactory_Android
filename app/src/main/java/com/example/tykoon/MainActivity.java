@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
     ViewFlipper vFlipper; // 주방, 홀 왔다갔다
     View dialogView;    // 아이템 버튼을 눌렀을때 나오는 대화상자
 
-    RatingBar ratingBar;
+    static RatingBar ratingBar;
     ProgressBar progFood;
 
     String ingredient = "\n\n\n";   //TextView에 보여줄 텍스트 생성
@@ -155,9 +155,10 @@ public class MainActivity extends AppCompatActivity {
                         HomeActivity.mP = null;
 
                         GameInstance.getInstance().init(); // 인스턴스 초기화해서 게임 정보 초기화함
+                        finish();
 
-                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                        startActivity(intent);
+                        // Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                        // startActivity(intent);
                     }
                     int hour = (int) (world_time / HOUR);
                     int minute = (int) ((world_time % HOUR) / MIN);
@@ -262,6 +263,9 @@ public class MainActivity extends AppCompatActivity {
                             case TABLE_4:
                             case TABLE_5:
                             case TABLE_6:
+                                // 서빙 시 이미 타임아웃이라면 리턴
+                                if(is_time_over[Tag])
+                                    return;
                                 // 서빙 성공 시 손님 나가고 다음 손님 들어올 준비 -> 손님 나가고 점수 계산하는 코드 필요
                                 if(CheckOrder(i,Tag))
                                 {

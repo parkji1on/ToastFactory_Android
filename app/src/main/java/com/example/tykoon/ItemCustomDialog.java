@@ -28,10 +28,14 @@ public class ItemCustomDialog extends Dialog {
             @Override
             public void onClick(View v) {
                 //Integer item0_rest = Integer.parseInt(txt_item0.getText().toString());
+                if(GameInstance.getInstance().getRating() >= 5.0f)
+                    return;
+
                 if(item0_rest > 0){
                     item0_rest = item0_rest-1;
                     GameInstance.getInstance().setItem_rest(item0_rest);
                     GameInstance.getInstance().setRating(GameInstance.getInstance().getRating()+0.5f);
+                    MainActivity.ratingBar.setRating(GameInstance.getInstance().getRating());
                     txt_item0.setText(item0_rest.toString());
                 }
                 else Toast.makeText(context, "아이템의 수가 부족합니다.", Toast.LENGTH_SHORT).show();
